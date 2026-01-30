@@ -1,0 +1,28 @@
+.header {
+}
+
+.button {
+    font-size: 50px;
+    width: 440px;
+    height: 120px;
+    align-self: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-image: url("project://database/Assets/UI%20Toolkit/UISprites/MenuButton.png?fileID=2800000&guid=90ced506aa0f51a4289ec49382f4a6ed&type=3#MenuButton");
+    background-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    margin-top: 200px;
+    transition-duration: 0.2s;
+}
+
+.button:hover {
+    scale: 1.1 1.1;
+    background-image: url("project://database/Assets/UI%20Toolkit/UISprites/MenuButtonPressed.png?fileID=2800000&guid=7194b907763190b4ab82436aaba93472&type=3#MenuButtonPressed");
+}
