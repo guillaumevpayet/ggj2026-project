@@ -22,6 +22,7 @@ namespace Boss
         [SerializeField] private Vector3 activeMaskScale;
         [SerializeField] private float maskSwitchingSpeed;
         [SerializeField] private float rotationSpeed;
+        [SerializeField] private float minimumAttackDelayAfterAction;
         
         // -------------------
 
@@ -73,6 +74,7 @@ namespace Boss
             
             Teleport();
             ResetTeleportTimer();
+            EnsureAttackDelay();
         }
 
         /// <summary>
@@ -106,6 +108,7 @@ namespace Boss
             
             SwitchMask();
             ResetMaskSwitchTimer();
+            EnsureAttackDelay();
         }
 
         /// <summary>
@@ -131,11 +134,11 @@ namespace Boss
             
             var projectile = Instantiate(
                 projectilePrefab,
-                transform.position + Vector3.up * 4,
+                transform.position + playerDirection * 2f,
                 Quaternion.LookRotation(playerDirection)
             );
             
-            projectile.GetComponent<Rigidbody>().linearVelocity = playerDirection * 10f;
+            projectile.GetComponent<Rigidbody>().linearVelocity = playerDirection * 50f;
         }
 
         /// <summary>
@@ -241,6 +244,14 @@ namespace Boss
                 Mask.Blue => blueProjectilePrefab,
                 _ => throw new ArgumentOutOfRangeException()
             };
+
+        private void EnsureAttackDelay()
+        {
+            if (_attackTimer < minimumAttackDelayAfterAction)
+            {
+                ResetAttackTimer();
+            }
+        }
         
         /// <summary>
        /// Resets the teleport timer.

@@ -485,7 +485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teleportBounds: {x: 20, y: 20}
   teleportFrequency: 3
-  attackFrequency: 1
+  attackFrequency: 10
   maskSwitchFrequency: 5
   player: {fileID: 0}
   redProjectilePrefab: {fileID: 5880931642068259788, guid: 1299a3dfd04c82f4fb71805e2428bc2d, type: 3}
@@ -497,3 +497,4 @@ MonoBehaviour:
   activeMaskScale: {x: 1.5, y: 1.5, z: 1.5}
   maskSwitchingSpeed: 2
   rotationSpeed: 2
+  minimumAttackDelayAfterAction: 0.5
