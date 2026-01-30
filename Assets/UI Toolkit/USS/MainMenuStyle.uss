@@ -19,4 +19,10 @@
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
     margin-top: 200px;
+    transition-duration: 0.2s;
+}
+
+.button:hover {
+    scale: 1.1 1.1;
+    background-image: url("project://database/Assets/UI%20Toolkit/UISprites/MenuButtonPressed.png?fileID=2800000&guid=7194b907763190b4ab82436aaba93472&type=3#MenuButtonPressed");
 }
