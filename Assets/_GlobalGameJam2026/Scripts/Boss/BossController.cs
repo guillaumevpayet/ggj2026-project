@@ -60,26 +60,20 @@ namespace Boss
 
 
         /// <summary>
-        /// Applies damage to the boss based on the specified mask color.
+        /// Applies damage to the boss based on the active mask color.
         /// Handles pillar damage, the player's progression in the fight,
         /// and executes any necessary state transitions when a pillar is destroyed.
         /// </summary>
-        /// <param name="mask">The color of the mask corresponding to the pillar being damaged.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if the provided mask color is invalid.</exception>
         public void TakeDamage()
         {
-            var mask = _activeMask;
-            switch (_masksLeft == 0)
+            if (_masksLeft == 0)
             {
-                case false when mask != _activeMask:
-                    return;
-                case true:
-                    // TODO Player wins!
-                    Debug.Log("Player wins!");
-                    return;
+                // TODO Player wins!
+                Debug.Log("Player wins!");
+                return;
             }
 
-            var pillar = mask switch
+            var pillar = _activeMask switch
             {
                 MaskColor.Red => redPillarHealth,
                 MaskColor.Black => blackPillarHealth,
@@ -95,11 +89,11 @@ namespace Boss
                 return;
             }
 
-            _pillarDown.Add(mask);
+            _pillarDown.Add(_activeMask);
             _masksLeft -= 1;
-            Debug.Log($"Bob lost the {mask} mask.");
+            Debug.Log($"Bob lost the {_activeMask} mask.");
 
-            if (_masksLeft > 1)
+            if (_masksLeft > 0)
             {
                 SwitchMask();
             }
@@ -132,7 +126,13 @@ namespace Boss
             Debug.Log($"Bob waits for {waitDuration} seconds.");
             yield return new WaitForSeconds(waitDuration);
 
-            var range = teleportFrequency + attackFrequency + maskSwitchFrequency;
+            var includeSwitchingMasks = _masksLeft > 1;
+            var includeAttacking = _masksLeft > 0;
+
+            var range = teleportFrequency
+                        + (includeAttacking ? attackFrequency : 0f)
+                        + (includeSwitchingMasks ? maskSwitchFrequency : 0f);
+            
             var action = Random.Range(0f, range);
 
             if (action <= teleportFrequency)
@@ -327,21 +327,6 @@ namespace Boss
                 MaskColor.Red => redMask,
                 MaskColor.Black => blackMask,
                 MaskColor.Blue => blueMask,
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-        /// <summary>
-        /// Returns the projectile pool corresponding to the given mask.
-        /// </summary>
-        /// <param name="mask">Mask</param>
-        /// <returns>Projectile pool</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Mask is not in enum</exception>
-        private BossProjectilePool GetProjectilePool(MaskColor mask) =>
-            mask switch
-            {
-                MaskColor.Red => redProjectilePool,
-                MaskColor.Black => blackProjectilePool,
-                MaskColor.Blue => blueProjectilePool,
                 _ => throw new ArgumentOutOfRangeException()
             };
 
