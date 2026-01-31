@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Boss
@@ -8,28 +9,34 @@ namespace Boss
     {
         // Showing up in Unity
         
-        [SerializeField] private Vector2 teleportBounds;
-        [SerializeField] private float teleportFrequency;
-        [SerializeField] private float attackFrequency;
-        [SerializeField] private float maskSwitchFrequency;
         [SerializeField] private Transform player;
         [SerializeField] private GameObject redProjectilePrefab;
-        [SerializeField] private GameObject greenProjectilePrefab;
+        [SerializeField] private GameObject blackProjectilePrefab;
         [SerializeField] private GameObject blueProjectilePrefab;
         [SerializeField] private GameObject redMask;
-        [SerializeField] private GameObject greenMask;
+        [SerializeField] private GameObject blackMask;
         [SerializeField] private GameObject blueMask;
+        [SerializeField] private float minimumCooldownAfterAction;
+        
+        [Header("Teleportation")]
+        [SerializeField] private Vector2 teleportBounds;
+        [SerializeField] private float teleportFrequency;
+        
+        [Header("Attacks")]
+        [SerializeField] private float attackFrequency;
+        
+        [Header("Mask Switching")]
+        [SerializeField] private float maskSwitchFrequency;
         [SerializeField] private Vector3 activeMaskScale;
         [SerializeField] private float maskSwitchingSpeed;
         [SerializeField] private float rotationSpeed;
-        [SerializeField] private float minimumAttackDelayAfterAction;
         
         // -------------------
 
         private enum Mask
         {
             Red,
-            Green,
+            Black,
             Blue
         };
 
@@ -74,7 +81,7 @@ namespace Boss
             
             Teleport();
             ResetTeleportTimer();
-            EnsureAttackDelay();
+            EnsureCooldowns();
         }
 
         /// <summary>
@@ -108,7 +115,7 @@ namespace Boss
             
             SwitchMask();
             ResetMaskSwitchTimer();
-            EnsureAttackDelay();
+            EnsureCooldowns();
         }
 
         /// <summary>
@@ -121,20 +128,37 @@ namespace Boss
             transform.position = new Vector3(randomX, transform.position.y, randomZ);
             
             // Rotate only around Y (ignore vertical difference).
+            var maskTransform = GetMaskGameObject(_activeMask).transform;
+
+            // Rotate only around Y (ignore vertical difference).
             var toPlayer = player.position - transform.position;
             toPlayer.y = 0f;
 
-            transform.rotation = Quaternion.LookRotation(toPlayer.normalized, Vector3.up);
+            var toMask = maskTransform.position - transform.position;
+            toMask.y = 0f;
+
+            // Avoid invalid rotations when something is exactly on top/center.
+            if (toPlayer.sqrMagnitude <= 0.0001f || toMask.sqrMagnitude <= 0.0001f)
+                return;
+
+            var playerDir = toPlayer.normalized;
+            var maskDir = toMask.normalized;
+
+            // Angle needed to rotate the boss around Y so maskDir aligns with playerDir.
+            var yawDelta = Vector3.SignedAngle(maskDir, playerDir, Vector3.up);
+
+            // Apply instantly (teleport is an instant action).
+            transform.rotation = Quaternion.AngleAxis(yawDelta, Vector3.up) * transform.rotation;
         }
         
         private void Attack()
         {
             var projectilePrefab = GetProjectilePrefab(_activeMask);
-            var playerDirection = (player.position - transform.position).normalized;
+            var maskPosition = GetMaskGameObject(_activeMask).transform.position;
             
             var projectile = Instantiate(
                 projectilePrefab,
-                transform.position + playerDirection * 2f,
+                maskPosition,
                 Quaternion.identity
             );
             
@@ -225,7 +249,7 @@ namespace Boss
             mask switch
             {
                 Mask.Red => redMask,
-                Mask.Green => greenMask,
+                Mask.Black => blackMask,
                 Mask.Blue => blueMask,
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -240,16 +264,26 @@ namespace Boss
             mask switch
             {
                 Mask.Red => redProjectilePrefab,
-                Mask.Green => greenProjectilePrefab,
+                Mask.Black => blackProjectilePrefab,
                 Mask.Blue => blueProjectilePrefab,
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-        private void EnsureAttackDelay()
+        private void EnsureCooldowns()
         {
-            if (_attackTimer < minimumAttackDelayAfterAction)
+            if (_teleportTimer < minimumCooldownAfterAction)
+            {
+                ResetTeleportTimer();
+            }
+            
+            if (_attackTimer < minimumCooldownAfterAction)
             {
                 ResetAttackTimer();
+            }
+            
+            if (_maskSwitchTimer < minimumCooldownAfterAction)
+            {
+                ResetMaskSwitchTimer();
             }
         }
         
