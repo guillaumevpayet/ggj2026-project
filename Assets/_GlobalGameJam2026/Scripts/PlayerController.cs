@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour{
         yield return new WaitForSeconds(hitboxActiveTime);
 
         attackHitbox.enabled = false;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
         readyToAttack = true;
     }
 }

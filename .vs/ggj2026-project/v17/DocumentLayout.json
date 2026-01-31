@@ -1,17 +1,21 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\local\\sopdc106\\ggj2026-project\\",
+  "WorkspaceRootPath": "D:\\local\\sopdc101\\ggj2026-project\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{54228151-1674-DD8A-F40B-311E26198389}|Assembly-CSharp.csproj|d:\\local\\sopdc106\\ggj2026-project\\assets\\_globalgamejam2026\\scripts\\boss\\bosscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{54228151-1674-DD8A-F40B-311E26198389}|Assembly-CSharp.csproj|solutionrelative:assets\\_globalgamejam2026\\scripts\\boss\\bosscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{54228151-1674-DD8A-F40B-311E26198389}|Assembly-CSharp.csproj|d:\\local\\sopdc101\\ggj2026-project\\assets\\_globalgamejam2026\\scripts\\attackcollisionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{54228151-1674-DD8A-F40B-311E26198389}|Assembly-CSharp.csproj|solutionrelative:assets\\_globalgamejam2026\\scripts\\attackcollisionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{54228151-1674-DD8A-F40B-311E26198389}|Assembly-CSharp.csproj|d:\\local\\sopdc106\\ggj2026-project\\assets\\_globalgamejam2026\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{54228151-1674-DD8A-F40B-311E26198389}|Assembly-CSharp.csproj|D:\\local\\sopdc101\\ggj2026-project\\assets\\_globalgamejam2026\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{54228151-1674-DD8A-F40B-311E26198389}|Assembly-CSharp.csproj|solutionrelative:assets\\_globalgamejam2026\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{54228151-1674-DD8A-F40B-311E26198389}|Assembly-CSharp.csproj|D:\\local\\sopdc106\\ggj2026-project\\assets\\ui toolkit\\mainmenuscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{54228151-1674-DD8A-F40B-311E26198389}|Assembly-CSharp.csproj|d:\\local\\sopdc101\\ggj2026-project\\assets\\_globalgamejam2026\\scripts\\boss\\bosscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{54228151-1674-DD8A-F40B-311E26198389}|Assembly-CSharp.csproj|solutionrelative:assets\\_globalgamejam2026\\scripts\\boss\\bosscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{54228151-1674-DD8A-F40B-311E26198389}|Assembly-CSharp.csproj|D:\\local\\sopdc101\\ggj2026-project\\assets\\ui toolkit\\mainmenuscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{54228151-1674-DD8A-F40B-311E26198389}|Assembly-CSharp.csproj|solutionrelative:assets\\ui toolkit\\mainmenuscript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -22,17 +26,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AttackCollisionHandler.cs",
+              "DocumentMoniker": "D:\\local\\sopdc101\\ggj2026-project\\Assets\\_GlobalGameJam2026\\Scripts\\AttackCollisionHandler.cs",
+              "RelativeDocumentMoniker": "Assets\\_GlobalGameJam2026\\Scripts\\AttackCollisionHandler.cs",
+              "ToolTip": "D:\\local\\sopdc101\\ggj2026-project\\Assets\\_GlobalGameJam2026\\Scripts\\AttackCollisionHandler.cs",
+              "RelativeToolTip": "Assets\\_GlobalGameJam2026\\Scripts\\AttackCollisionHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-31T21:30:20.941Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "BossController.cs",
-              "DocumentMoniker": "D:\\local\\sopdc106\\ggj2026-project\\Assets\\_GlobalGameJam2026\\Scripts\\Boss\\BossController.cs",
+              "DocumentMoniker": "D:\\local\\sopdc101\\ggj2026-project\\Assets\\_GlobalGameJam2026\\Scripts\\Boss\\BossController.cs",
               "RelativeDocumentMoniker": "Assets\\_GlobalGameJam2026\\Scripts\\Boss\\BossController.cs",
-              "ToolTip": "D:\\local\\sopdc106\\ggj2026-project\\Assets\\_GlobalGameJam2026\\Scripts\\Boss\\BossController.cs",
+              "ToolTip": "D:\\local\\sopdc101\\ggj2026-project\\Assets\\_GlobalGameJam2026\\Scripts\\Boss\\BossController.cs",
               "RelativeToolTip": "Assets\\_GlobalGameJam2026\\Scripts\\Boss\\BossController.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAQwDcAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAACYAAAAAAAAAAAAQwDYAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-31T08:40:10.37Z",
               "EditorCaption": ""
@@ -41,26 +62,27 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "PlayerController.cs",
-              "DocumentMoniker": "D:\\local\\sopdc106\\ggj2026-project\\Assets\\_GlobalGameJam2026\\Scripts\\PlayerController.cs",
+              "DocumentMoniker": "D:\\local\\sopdc101\\ggj2026-project\\Assets\\_GlobalGameJam2026\\Scripts\\PlayerController.cs",
               "RelativeDocumentMoniker": "Assets\\_GlobalGameJam2026\\Scripts\\PlayerController.cs",
-              "ToolTip": "D:\\local\\sopdc106\\ggj2026-project\\Assets\\_GlobalGameJam2026\\Scripts\\PlayerController.cs",
+              "ToolTip": "D:\\local\\sopdc101\\ggj2026-project\\Assets\\_GlobalGameJam2026\\Scripts\\PlayerController.cs",
               "RelativeToolTip": "Assets\\_GlobalGameJam2026\\Scripts\\PlayerController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAwwJ4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-01-31T02:04:03.584Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "MainMenuScript.cs",
-              "DocumentMoniker": "D:\\local\\sopdc106\\ggj2026-project\\Assets\\UI Toolkit\\MainMenuScript.cs",
+              "DocumentMoniker": "D:\\local\\sopdc101\\ggj2026-project\\Assets\\UI Toolkit\\MainMenuScript.cs",
               "RelativeDocumentMoniker": "Assets\\UI Toolkit\\MainMenuScript.cs",
-              "ToolTip": "D:\\local\\sopdc106\\ggj2026-project\\Assets\\UI Toolkit\\MainMenuScript.cs",
+              "ToolTip": "D:\\local\\sopdc101\\ggj2026-project\\Assets\\UI Toolkit\\MainMenuScript.cs",
               "RelativeToolTip": "Assets\\UI Toolkit\\MainMenuScript.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-30T22:38:05.414Z"
+              "WhenOpened": "2026-01-30T22:38:05.414Z",
+              "EditorCaption": ""
             }
           ]
         }
