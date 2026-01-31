@@ -9,11 +9,13 @@ public class PlayerController : MonoBehaviour{
     public float jumpHeight;
     private bool isJumping = true;
     public float dropRate;
+    private Camera mainCamera;
 
     private void Start()
     {
         player = GetComponent<Rigidbody>();
         playerObject = GameObject.Find("Player");
+        mainCamera = Camera.main;
     }
 
     public void FixedUpdate()
@@ -54,9 +56,15 @@ public class PlayerController : MonoBehaviour{
             temp.z = velocity.z;
         }
         player.linearVelocity = (temp);
-        if(playerObject.transform.position.y <= 2.6)
+        if (playerObject.transform.position.y <= 3.6)
         {
             isJumping = false;
         }
+        PlayerLookAtMouse();
+    }
+
+    void PlayerLookAtMouse()
+    {
+
     }
 }
