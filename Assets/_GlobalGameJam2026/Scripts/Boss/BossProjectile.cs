@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Boss
@@ -11,21 +12,20 @@ namespace Boss
         // -------------------
         
         private Transform _player;
-        private Rigidbody _rb;
         private BossProjectilePool _pool;
+        private Vector3 _direction;
 
-        private void Awake()
+        public void Shoot(Vector3 origin, Transform player, BossProjectilePool pool, Vector3? direction = null)
         {
-            _rb = GetComponent<Rigidbody>();
-        }
-
-        public void Shoot(Vector3 origin, Transform player, BossProjectilePool pool)
-        {
-            transform.position = origin;
-            var playerDirection = (player.position - transform.position).normalized;
-            _rb.linearVelocity = playerDirection * speed;
+            transform.localPosition = origin;
+            _direction = direction ?? (player.position - transform.position).normalized;
             _player = player;
             _pool = pool;
+        }
+
+        private void Update()
+        {
+            transform.localPosition += _direction * (Time.deltaTime * speed);
         }
 
         private void OnTriggerEnter(Collider other)

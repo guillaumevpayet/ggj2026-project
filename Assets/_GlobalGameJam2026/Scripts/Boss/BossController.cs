@@ -33,6 +33,9 @@ namespace Boss
         [SerializeField] private float rateOfFire;
         [SerializeField] private float attackDuration;
         [SerializeField] private float vulnerabilityDuration;
+        [SerializeField] private float spiralRateOfFire;
+        [SerializeField] private float spiralRotationSpeed;
+        [SerializeField] private GameObject spiralContainerPrefab;
 
         [Header("Mask Switching")]
         [SerializeField] private float maskSwitchFrequency;
@@ -41,24 +44,30 @@ namespace Boss
 
         // -------------------
 
-        private float _teleportTimer;
-        private float _attackTimer;
-        private float _maskSwitchTimer;
         private MaskColor _activeMask;
         private readonly HashSet<MaskColor> _pillarDown = new();
         private int _masksLeft = Enum.GetValues(typeof(MaskColor)).Length;
         private Transform _activeMaskTransform;
-        
+
         // Jump (teleport) interpolation variables
         private Vector3 _previousPosition;
         private Vector3 _nextPosition;
         private float _jumpProgressRemaining;
-        
-        
+
+
+        /// <summary>
+        /// Whether the boss is currently vulnerable to damage.
+        /// </summary>
         public bool IsVulnerable { get; private set; }
 
-        
-        // public void TakeDamage(MaskColor mask)
+
+        /// <summary>
+        /// Applies damage to the boss based on the specified mask color.
+        /// Handles pillar damage, the player's progression in the fight,
+        /// and executes any necessary state transitions when a pillar is destroyed.
+        /// </summary>
+        /// <param name="mask">The color of the mask corresponding to the pillar being damaged.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the provided mask color is invalid.</exception>
         public void TakeDamage()
         {
             var mask = _activeMask;
@@ -87,7 +96,7 @@ namespace Boss
             {
                 return;
             }
-            
+
             _pillarDown.Add(mask);
             _masksLeft -= 1;
             Debug.Log($"Bob lost the {mask} mask.");
@@ -97,86 +106,46 @@ namespace Boss
                 SwitchMask();
             }
         }
-        
+
 
         private void Start()
         {
             SetMaskActive(_activeMask);
-            
-            ResetTeleportTimer();
-            ResetAttackTimer();
-            ResetMaskSwitchTimer();
+            StartCoroutine(WaitAndDoSomething());
+
         }
 
         private void Update()
         {
-            HandleTeleportTimer();
-            HandleAttackTimer();
-            HandleMaskSwitchingTimer();
             HandleLerps();
         }
 
-        /// <summary>
-        /// Handles the countdown timer for the boss's teleportation mechanism.
-        /// When the timer reaches zero, the boss is teleported to a new random position
-        /// within the teleport bounds, and the timer is reset based on the teleport frequency.
-        /// </summary>
-        private void HandleTeleportTimer()
-        {
-            _teleportTimer -= Time.deltaTime;
-
-            if (_teleportTimer > 0f)
-            {
-                return;
-            }
-            
-            Teleport();
-            ResetTeleportTimer();
-            EnsureCooldowns();
-        }
 
         /// <summary>
-        /// Handles the countdown timer for the boss's attack mechanism.
-        /// When the timer reaches zero, an attack is triggered, and the timer is reset based on the attack frequency.
+        /// Waits for a random duration before executing one of three possible actions: teleport, attack, or switch the active mask.
         /// </summary>
-        private void HandleAttackTimer()
+        /// <returns>An enumerator used for coroutine control.</returns>
+        private IEnumerator WaitAndDoSomething()
         {
-            if (_masksLeft < 1)
-            {
-                return;
-            }
-            
-            _attackTimer -= Time.deltaTime;
+            var waitDuration = Random.Range(minimumCooldownAfterAction, 2f);
+            Debug.Log($"Bob waits for {waitDuration} seconds.");
+            yield return new WaitForSeconds(waitDuration);
 
-            if (_attackTimer > 0f)
-            {
-                return;
-            }
-            
-            Attack();
-            ResetAttackTimer();
-        }
+            var range = teleportFrequency + attackFrequency + maskSwitchFrequency;
+            var action = Random.Range(0f, range);
 
-        /// <summary>
-        /// Handles the countdown timer for the boss's mask switching mechanism.'
-        /// </summary>
-        private void HandleMaskSwitchingTimer()
-        {
-            if (_masksLeft < 2)
+            if (action <= teleportFrequency)
             {
-                return;
+                Teleport();
             }
-            
-            _maskSwitchTimer -= Time.deltaTime;
-
-            if (_maskSwitchTimer > 0f)
+            else if (action <= teleportFrequency + attackFrequency)
             {
-                return;
+                Attack();
             }
-            
-            SwitchMask();
-            ResetMaskSwitchTimer();
-            EnsureCooldowns();
+            else
+            {
+                SwitchMask();
+            }
         }
 
         /// <summary>
@@ -192,25 +161,27 @@ namespace Boss
                 // Progress between -1 and 1
                 var shiftedProgress = 2f * (progress - 0.5f);
                 var height = teleportMaxHeight * (1f - shiftedProgress * shiftedProgress);
-                
+
                 transform.position = new Vector3(position.x, height, position.z);
                 _jumpProgressRemaining -= Time.deltaTime / teleportDuration;
             }
-            
+
             var desiredRotation = GetDesiredRotation();
-            
+
             transform.rotation = Quaternion.RotateTowards(
                 transform.rotation,
                 desiredRotation,
                 rotationSpeed * Time.deltaTime
             );
         }
-        
+
         /// <summary>
         /// Teleports the boss to a random position within the teleportBounds.
         /// </summary>
         private void Teleport()
         {
+            Debug.Log("Bob teleports!");
+            StartCoroutine(WaitAndDoSomething());
             _previousPosition = transform.position;
             var randomX = Random.Range(-teleportBounds.x, teleportBounds.x);
             var randomZ = Random.Range(-teleportBounds.y, teleportBounds.y);
@@ -223,16 +194,20 @@ namespace Boss
         /// </summary>
         private void Attack()
         {
+            Debug.Log("Bob attacks!");
             IsVulnerable = true;
             StartCoroutine(WaitAndBecomeInvulnerable());
 
             switch (_activeMask)
             {
                 case MaskColor.Red:
-                    StartCoroutine(RedMaskAttack());
-                    EnsureCooldowns(attackDuration);
+                    StartCoroutine(MachineGunAttack());
                     break;
-                
+
+                case MaskColor.Blue:
+                    StartCoroutine(SpiralAttack());
+                    break;
+
                 default:
                     var projectilePool = GetProjectilePool(_activeMask);
                     var projectile = projectilePool.GetProjectile();
@@ -242,16 +217,44 @@ namespace Boss
             }
         }
 
-        private IEnumerator RedMaskAttack()
+        private IEnumerator MachineGunAttack()
         {
-            var duration = 0f;
+            var timeLeft = attackDuration;
 
-            while (duration < attackDuration)
+            while (timeLeft > 0f)
             {
                 var projectile = redProjectilePool.GetProjectile();
-                projectile.GetComponent<BossProjectile>().Shoot(_activeMaskTransform.position, player, redProjectilePool);
+                var maskPosition = _activeMaskTransform.position;
+                projectile.GetComponent<BossProjectile>().Shoot(maskPosition, player, redProjectilePool);
                 yield return new WaitForSeconds(1f / rateOfFire);
-                duration += Time.deltaTime;
+                timeLeft -= 1f / rateOfFire;
+            }
+        }
+
+        private IEnumerator SpiralAttack()
+        {
+            var timeLeft = attackDuration;
+            var timeDelta = 1f / spiralRateOfFire;
+            var maskPosition = _activeMaskTransform.position;
+            var spiralContainer = Instantiate(spiralContainerPrefab, maskPosition, Quaternion.identity);
+            spiralContainer.transform.position = maskPosition;
+
+            while (timeLeft > 0f)
+            {
+                var referenceAngle = spiralRotationSpeed * timeLeft / attackDuration;
+                var baseDirection = Quaternion.AngleAxis(referenceAngle, Vector3.up) * Vector3.forward;
+                // var baseDirection = Vector3.forward;
+
+                for (var i = 0; i < 4; i++)
+                {
+                    var direction = Quaternion.AngleAxis(i * 90, Vector3.up) * baseDirection;
+                    var projectile = blueProjectilePool.GetProjectile();
+                    projectile.transform.SetParent(spiralContainer.transform);
+                    projectile.GetComponent<BossProjectile>().Shoot(Vector3.zero, player, blueProjectilePool, direction);
+                }
+
+                yield return new WaitForSeconds(timeDelta);
+                timeLeft -= timeDelta;
             }
         }
 
@@ -259,6 +262,7 @@ namespace Boss
         {
             yield return new WaitForSeconds(vulnerabilityDuration);
             IsVulnerable = false;
+            StartCoroutine(WaitAndDoSomething());
         }
 
         /// <summary>
@@ -266,6 +270,8 @@ namespace Boss
         /// </summary>
         private void SwitchMask()
         {
+            Debug.Log("Bob switches masks!");
+            StartCoroutine(WaitAndDoSomething());
             var newMask = _activeMask;
 
             // Pick a mask that is not the current one and is not down.
@@ -273,7 +279,7 @@ namespace Boss
             {
                 newMask = (MaskColor) Random.Range(0, Enum.GetValues(typeof(MaskColor)).Length);
             }
-            
+
             _activeMask = newMask;
             SetMaskActive(_activeMask);
         }
@@ -338,43 +344,5 @@ namespace Boss
             var yawDelta = Vector3.SignedAngle(maskDir, playerDir, Vector3.up);
             return Quaternion.AngleAxis(yawDelta, Vector3.up) * transform.rotation;
         }
-        
-        private void EnsureCooldowns(float cooldown = 0f)
-        {
-            if (cooldown == 0f)
-            {
-                cooldown = minimumCooldownAfterAction;
-            }
-            
-            if (_teleportTimer < cooldown)
-            {
-                ResetTeleportTimer();
-            }
-            
-            if (_attackTimer < cooldown)
-            {
-                ResetAttackTimer();
-            }
-            
-            if (_maskSwitchTimer < cooldown)
-            {
-                ResetMaskSwitchTimer();
-            }
-        }
-
-        /// <summary>
-        /// Resets the teleport timer.
-        /// </summary>
-        private void ResetTeleportTimer() => _teleportTimer = 10f / (4 - _masksLeft) / teleportFrequency;
-
-        /// <summary>
-        /// Resets the attack timer.
-        /// </summary>
-        private void ResetAttackTimer() => _attackTimer = 10f / (4 - _masksLeft) / attackFrequency;
-
-        /// <summary>
-        /// Resets the mask switching timer.
-        /// </summary>
-        private void ResetMaskSwitchTimer() => _maskSwitchTimer = 10f / (4 - _masksLeft) / maskSwitchFrequency;
     }
 }

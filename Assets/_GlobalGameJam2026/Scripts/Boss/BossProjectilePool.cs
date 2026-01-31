@@ -18,8 +18,13 @@ namespace Boss
         /// Returns a projectile from the pool. If the pool is empty, a new one is instantiated.
         /// </summary>
         /// <returns>Projectile</returns>
-        public GameObject GetProjectile() =>
-            _projectiles.Count == 0 ? Instantiate(projectilePrefab) : _projectiles.Pop();
+        public GameObject GetProjectile()
+        {
+            var projectile = _projectiles.Count == 0 ? Instantiate(projectilePrefab) : _projectiles.Pop();
+            projectile.transform.parent = null;
+            projectile.SetActive(true);
+            return projectile;
+        }
 
         /// <summary>
         /// Adds a projectile to the pool.
