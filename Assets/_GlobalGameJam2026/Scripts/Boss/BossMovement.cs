@@ -135,10 +135,10 @@ namespace Boss
             var projectile = Instantiate(
                 projectilePrefab,
                 transform.position + playerDirection * 2f,
-                Quaternion.LookRotation(playerDirection)
+                Quaternion.identity
             );
             
-            projectile.GetComponent<Rigidbody>().linearVelocity = playerDirection * 50f;
+            projectile.GetComponent<BossProjectile>().Shoot(player);
         }
 
         /// <summary>

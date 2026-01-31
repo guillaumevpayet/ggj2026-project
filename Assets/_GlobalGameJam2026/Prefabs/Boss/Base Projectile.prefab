@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2184445726578012334}
   - component: {fileID: 14360714035905956}
   - component: {fileID: 5850465206456108435}
+  - component: {fileID: 8676333140103033594}
   m_Layer: 0
   m_Name: Base Projectile
   m_TagString: Untagged
@@ -101,9 +102,9 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -136,3 +137,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8676333140103033594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263858021998000630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34c0d7ec01cd21540b72850f06e13989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
