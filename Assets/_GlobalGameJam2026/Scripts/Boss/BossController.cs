@@ -21,6 +21,8 @@ namespace Boss
         [Header("Teleportation")]
         [SerializeField] private Vector2 teleportBounds;
         [SerializeField] private float teleportFrequency;
+        [SerializeField] private float teleportDuration;
+        [SerializeField] private float teleportMaxHeight;
 
         [Header("Attacks")]
         [SerializeField] private float attackFrequency;
@@ -30,7 +32,6 @@ namespace Boss
 
         [Header("Mask Switching")]
         [SerializeField] private float maskSwitchFrequency;
-        [SerializeField] private Vector3 activeMaskScale;
         [SerializeField] private float maskSwitchingSpeed;
         [SerializeField] private float rotationSpeed;
 
@@ -43,6 +44,11 @@ namespace Boss
         private readonly HashSet<MaskColor> _pillarDown = new();
         private int _masksLeft = Enum.GetValues(typeof(MaskColor)).Length;
         private Transform _activeMaskTransform;
+        
+        // These two are for interpolating during the jump (teleport)
+        private Vector3 _previousPosition;
+        private Vector3 _nextPosition;
+        private float _jumpProgressRemaining;
 
         
         public void TakeDamage(MaskColor mask)
@@ -173,6 +179,19 @@ namespace Boss
         /// </summary>
         private void HandleLerps()
         {
+            if (_jumpProgressRemaining > 0f)
+            {
+                var progress = 1f - _jumpProgressRemaining;
+                var position = Vector3.Lerp(_previousPosition, _nextPosition, progress);
+
+                // Progress between -1 and 1
+                var shiftedProgress = 2f * (progress - 0.5f);
+                var height = teleportMaxHeight * (1f - shiftedProgress * shiftedProgress);
+                
+                transform.position = new Vector3(position.x, height, position.z);
+                _jumpProgressRemaining -= Time.deltaTime / teleportDuration;
+            }
+            
             var desiredRotation = GetDesiredRotation();
             
             transform.rotation = Quaternion.RotateTowards(
@@ -187,12 +206,11 @@ namespace Boss
         /// </summary>
         private void Teleport()
         {
+            _previousPosition = transform.position;
             var randomX = Random.Range(-teleportBounds.x, teleportBounds.x);
             var randomZ = Random.Range(-teleportBounds.y, teleportBounds.y);
-            transform.position = new Vector3(randomX, transform.position.y, randomZ);
-            
-            // Apply rotation instantly (teleport is an instant action).
-            transform.rotation = GetDesiredRotation();
+            _nextPosition = new Vector3(randomX, transform.position.y, randomZ);
+            _jumpProgressRemaining = 1f;
         }
 
         /// <summary>
