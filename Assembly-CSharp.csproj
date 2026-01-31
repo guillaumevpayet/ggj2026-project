@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\UI Toolkit\MainMenuScript.cs" />
+    <Compile Include="Assets\_GlobalGameJam2026\Scripts\PlayerController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\UI Toolkit\MainMenuVisualTree.uxml" />
