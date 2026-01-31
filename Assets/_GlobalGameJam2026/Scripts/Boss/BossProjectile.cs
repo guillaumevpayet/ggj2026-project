@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Boss
@@ -7,20 +6,20 @@ namespace Boss
     {
         // Showing up in Unity
         
-        [SerializeField] private float speed;
+        [SerializeField] protected float speed;
         
         // -------------------
         
-        private Transform _player;
-        private BossProjectilePool _pool;
+        protected Transform Player;
+        protected BossProjectilePool Pool;
         private Vector3 _direction;
 
-        public void Shoot(Vector3 origin, Transform player, BossProjectilePool pool, Vector3? direction = null)
+        public virtual void Shoot(Vector3 origin, Transform player, BossProjectilePool pool, Vector3? direction = null)
         {
             transform.localPosition = origin;
             _direction = direction ?? (player.position - transform.position).normalized;
-            _player = player;
-            _pool = pool;
+            Player = player;
+            Pool = pool;
         }
 
         private void Update()
@@ -28,14 +27,15 @@ namespace Boss
             transform.localPosition += _direction * (Time.deltaTime * speed);
         }
 
-        private void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
-            if (other.transform == _player)
+            if (other.transform == Player)
             {
                 // TODO Deal damage to player
+                Debug.Log("Hit player");
             }
             
-            _pool.AddProjectileToPool(gameObject);
+            Pool.AddProjectileToPool(gameObject);
         }
     }
 }

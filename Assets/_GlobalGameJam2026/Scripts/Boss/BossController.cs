@@ -14,7 +14,9 @@ namespace Boss
         [SerializeField] private GameObject redMask;
         [SerializeField] private GameObject blackMask;
         [SerializeField] private GameObject blueMask;
+        [SerializeField] private float delayAtStart;
         [SerializeField] private float minimumCooldownAfterAction;
+        [SerializeField] private float maximumCooldownAfterAction;
         [SerializeField] private PillarHealth redPillarHealth;
         [SerializeField] private PillarHealth blackPillarHealth;
         [SerializeField] private PillarHealth bluePillarHealth;
@@ -33,6 +35,7 @@ namespace Boss
         [SerializeField] private float rateOfFire;
         [SerializeField] private float attackDuration;
         [SerializeField] private float vulnerabilityDuration;
+        [SerializeField] private float shockwaveCount;
         [SerializeField] private float spiralRateOfFire;
         [SerializeField] private float spiralRotationSpeed;
         [SerializeField] private GameObject spiralContainerPrefab;
@@ -48,11 +51,6 @@ namespace Boss
         private readonly HashSet<MaskColor> _pillarDown = new();
         private int _masksLeft = Enum.GetValues(typeof(MaskColor)).Length;
         private Transform _activeMaskTransform;
-
-        // Jump (teleport) interpolation variables
-        private Vector3 _previousPosition;
-        private Vector3 _nextPosition;
-        private float _jumpProgressRemaining;
 
 
         /// <summary>
@@ -111,8 +109,7 @@ namespace Boss
         private void Start()
         {
             SetMaskActive(_activeMask);
-            StartCoroutine(WaitAndDoSomething());
-
+            StartCoroutine(WaitAndDoSomething(delayAtStart));
         }
 
         private void Update()
@@ -125,9 +122,13 @@ namespace Boss
         /// Waits for a random duration before executing one of three possible actions: teleport, attack, or switch the active mask.
         /// </summary>
         /// <returns>An enumerator used for coroutine control.</returns>
-        private IEnumerator WaitAndDoSomething()
+        private IEnumerator WaitAndDoSomething(float waitDuration = 0f)
         {
-            var waitDuration = Random.Range(minimumCooldownAfterAction, 2f);
+            if (waitDuration == 0f)
+            {
+                waitDuration = Random.Range(minimumCooldownAfterAction, maximumCooldownAfterAction);
+            }
+
             Debug.Log($"Bob waits for {waitDuration} seconds.");
             yield return new WaitForSeconds(waitDuration);
 
@@ -153,19 +154,6 @@ namespace Boss
         /// </summary>
         private void HandleLerps()
         {
-            if (_jumpProgressRemaining > 0f)
-            {
-                var progress = 1f - _jumpProgressRemaining;
-                var position = Vector3.Lerp(_previousPosition, _nextPosition, progress);
-
-                // Progress between -1 and 1
-                var shiftedProgress = 2f * (progress - 0.5f);
-                var height = teleportMaxHeight * (1f - shiftedProgress * shiftedProgress);
-
-                transform.position = new Vector3(position.x, height, position.z);
-                _jumpProgressRemaining -= Time.deltaTime / teleportDuration;
-            }
-
             var desiredRotation = GetDesiredRotation();
 
             transform.rotation = Quaternion.RotateTowards(
@@ -182,11 +170,31 @@ namespace Boss
         {
             Debug.Log("Bob teleports!");
             StartCoroutine(WaitAndDoSomething());
-            _previousPosition = transform.position;
             var randomX = Random.Range(-teleportBounds.x, teleportBounds.x);
             var randomZ = Random.Range(-teleportBounds.y, teleportBounds.y);
-            _nextPosition = new Vector3(randomX, transform.position.y, randomZ);
-            _jumpProgressRemaining = 1f;
+            var nextPosition = new Vector3(randomX, transform.position.y, randomZ);
+            StartCoroutine(Jump(nextPosition));
+        }
+
+        private IEnumerator Jump(Vector3 nextPosition)
+        {
+            var progress = 0f;
+            var originalPosition = transform.position;
+            
+            while (progress < 1f)
+            {
+                var position = Vector3.Lerp(originalPosition, nextPosition, progress);
+
+                // Progress between -1 and 1
+                var shiftedProgress = 2f * (progress - 0.5f);
+                var height = teleportMaxHeight * (1f - shiftedProgress * shiftedProgress);
+
+                transform.position = new Vector3(position.x, height, position.z);
+                progress += Time.deltaTime / teleportDuration;
+                yield return null;
+            }
+            
+            transform.position = nextPosition;
         }
 
         /// <summary>
@@ -203,17 +211,17 @@ namespace Boss
                 case MaskColor.Red:
                     StartCoroutine(MachineGunAttack());
                     break;
+                
+                case MaskColor.Black:
+                    StartCoroutine(ShockwaveAttack());
+                    break;
 
                 case MaskColor.Blue:
                     StartCoroutine(SpiralAttack());
                     break;
 
                 default:
-                    var projectilePool = GetProjectilePool(_activeMask);
-                    var projectile = projectilePool.GetProjectile();
-                    var maskPosition = _activeMaskTransform.position;
-                    projectile.GetComponent<BossProjectile>().Shoot(maskPosition, player, projectilePool);
-                    break;
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -231,6 +239,20 @@ namespace Boss
             }
         }
 
+        private IEnumerator ShockwaveAttack()
+        {
+            var timeLeft = attackDuration;
+            var timeDelta = attackDuration / shockwaveCount;
+
+            while (timeLeft > 0f)
+            {
+                var projectile = blackProjectilePool.GetProjectile();
+                projectile.GetComponent<BossProjectile>().Shoot(transform.position, player, blackProjectilePool);
+                yield return new WaitForSeconds(timeDelta);
+                timeLeft -= timeDelta;
+            }
+        }
+
         private IEnumerator SpiralAttack()
         {
             var timeLeft = attackDuration;
@@ -243,7 +265,6 @@ namespace Boss
             {
                 var referenceAngle = spiralRotationSpeed * timeLeft / attackDuration;
                 var baseDirection = Quaternion.AngleAxis(referenceAngle, Vector3.up) * Vector3.forward;
-                // var baseDirection = Vector3.forward;
 
                 for (var i = 0; i < 4; i++)
                 {

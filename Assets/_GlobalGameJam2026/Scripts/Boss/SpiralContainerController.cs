@@ -13,6 +13,13 @@ namespace Boss
         private void Update()
         {
             transform.Rotate(-Vector3.up * (rotationSpeed * Time.deltaTime));
+            
+            var children = GetComponentsInChildren<Transform>();
+
+            if (children.Length < 2)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
