@@ -8,4 +8,7 @@ Logs/
 
 /.idea/
 
-/Assembly-CSharp.csproj
+/*.sln
+/*.csproj
+
+/*.user
