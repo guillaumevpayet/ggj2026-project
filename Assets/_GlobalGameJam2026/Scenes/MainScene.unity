@@ -1239,6 +1239,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 22763506}
+    - target: {fileID: 5807457666719408023, guid: 848c461fc0768364489f29cec1f0aa4d, type: 3}
+      propertyPath: teleportBounds.x
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 5807457666719408023, guid: 848c461fc0768364489f29cec1f0aa4d, type: 3}
+      propertyPath: teleportBounds.y
+      value: 26
+      objectReference: {fileID: 0}
     - target: {fileID: 6622942501430703803, guid: 848c461fc0768364489f29cec1f0aa4d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

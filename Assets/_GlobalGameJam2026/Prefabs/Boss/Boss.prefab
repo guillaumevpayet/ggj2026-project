@@ -206,10 +206,13 @@ MonoBehaviour:
   teleportBounds: {x: 26, y: 26}
   teleportFrequency: 3
   attackFrequency: 10
-  maskSwitchFrequency: 3
+  redPillarHealth: {fileID: 0}
+  blackPillarHealth: {fileID: 0}
+  bluePillarHealth: {fileID: 0}
+  maskSwitchFrequency: 5
   activeMaskScale: {x: 1.5, y: 1.5, z: 1.5}
   maskSwitchingSpeed: 2
-  rotationSpeed: 2
+  rotationSpeed: 500
 --- !u!1001 &6307758823343647614
 PrefabInstance:
   m_ObjectHideFlags: 0

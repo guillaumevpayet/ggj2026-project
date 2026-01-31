@@ -9,3 +9,5 @@ Logs/
 /.idea/
 
 /Assembly-CSharp.csproj
+
+/*.user
