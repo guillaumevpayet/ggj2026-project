@@ -205,7 +205,7 @@ MonoBehaviour:
   minimumCooldownAfterAction: 0.5
   teleportBounds: {x: 26, y: 26}
   teleportFrequency: 3
-  attackFrequency: 10
+  attackFrequency: 15
   redPillarHealth: {fileID: 0}
   blackPillarHealth: {fileID: 0}
   bluePillarHealth: {fileID: 0}
