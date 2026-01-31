@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour{
     private void Start()
     {
         player = GetComponent<Rigidbody>();
-        playerObject = GameObject.Find("Player");
+        playerObject = GameObject.Find("PlayerContainer");
         mainCamera = Camera.main;
     }
 
@@ -56,15 +56,63 @@ public class PlayerController : MonoBehaviour{
             temp.z = velocity.z;
         }
         player.linearVelocity = (temp);
-        if (playerObject.transform.position.y <= 3.6)
+        if (playerObject.transform.position.y <= 4.1)
         {
             isJumping = false;
         }
-        PlayerLookAtMouse();
+        adjustRotation(temp);
+
     }
-
-    void PlayerLookAtMouse()
+    private void adjustRotation(Vector3 velocity)
     {
-
+        if (velocity.x < 0)
+        {
+            if (velocity.z < 0)
+            {
+                float curRotation = playerObject.transform.localRotation.z;
+                playerObject.transform.rotation = Quaternion.LookRotation(new Vector3(-0.5f, 0, -0.5f));
+            }
+            if (velocity.z > 0)
+            {
+                float curRotation = playerObject.transform.localRotation.z;
+                playerObject.transform.rotation = Quaternion.LookRotation(new Vector3(-0.5f, 0, 0.5f));
+            }
+            if (velocity.z == 0)
+            {
+                float curRotation = playerObject.transform.localRotation.z;
+                playerObject.transform.rotation = Quaternion.LookRotation(new Vector3(-1f, 0, 0));
+            }
+        }
+        if (velocity.x > 0)
+        {
+            if (velocity.z < 0)
+            {
+                float curRotation = playerObject.transform.localRotation.z;
+                playerObject.transform.rotation = Quaternion.LookRotation(new Vector3(0.5f, 0, -0.5f));
+            }
+            if (velocity.z > 0)
+            {
+                float curRotation = playerObject.transform.localRotation.z;
+                playerObject.transform.rotation = Quaternion.LookRotation(new Vector3(0.5f, 0, 0.5f));
+            }
+            if (velocity.z == 0)
+            {
+                float curRotation = playerObject.transform.localRotation.z;
+                playerObject.transform.rotation = Quaternion.LookRotation(new Vector3(1f, 0, 0));
+            }
+        }
+        if (velocity.x == 0)
+        {
+            if (velocity.z < 0)
+            {
+                float curRotation = playerObject.transform.localRotation.z;
+                playerObject.transform.rotation = Quaternion.LookRotation(new Vector3(0, 0, -1));
+            }
+            if (velocity.z > 0)
+            {
+                float curRotation = playerObject.transform.localRotation.z;
+                playerObject.transform.rotation = Quaternion.LookRotation(new Vector3(0, 0, 1));
+            }
+        }
     }
 }
