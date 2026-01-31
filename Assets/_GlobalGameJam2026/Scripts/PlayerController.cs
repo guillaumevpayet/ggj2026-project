@@ -6,10 +6,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour{
     private int3 health;
     private Rigidbody player;
-    private float speed = 50;
-    private float jumpHeight = 400;
-    private bool isJumping = false;
-    private float correctionBoost = 2f;
+    public float speed;
+    public float jumpHeight;
+    private bool isJumping = true;
+    public float dropRate;
 
     private void Start()
     {
@@ -27,39 +27,19 @@ public class PlayerController : MonoBehaviour{
 
         if (up && !isJumping)
         {
-            float tempSpeed = speed;
-            if(!down && velocity.x < 0)
-            {
-                tempSpeed = tempSpeed * correctionBoost;
-            }
-            temp.x = temp.x + tempSpeed;
+            temp.x = temp.x + speed;
         }
         if (down && !isJumping)
         {
-            float tempSpeed = speed;
-            if (!up && velocity.x > 0)
-            {
-                tempSpeed = tempSpeed * correctionBoost;
-            }
-            temp.x = temp.x - tempSpeed;
+            temp.x = temp.x - speed;
         }
         if (left && !isJumping)
         {
-            float tempSpeed = speed;
-            if (!right && velocity.z < 0)
-            {
-                tempSpeed = tempSpeed * correctionBoost;
-            }
-            temp.z = temp.z + tempSpeed;
+            temp.z = temp.z + speed;
         }
         if (right && !isJumping)
         {
-            float tempSpeed = speed;
-            if (!left && velocity.z > 0)
-            {
-                tempSpeed = tempSpeed * correctionBoost;
-            }
-            temp.z = temp.z - tempSpeed;
+            temp.z = temp.z - speed;
         }
         if (!isJumping && Input.GetKey(KeyCode.Space))
         {
@@ -67,7 +47,13 @@ public class PlayerController : MonoBehaviour{
             temp.y = jumpHeight;
             Debug.Log(temp);
         }
-        player.AddForce(temp);
+        else if (isJumping)
+        {
+            temp.x = velocity.x;
+            temp.y = velocity.y - dropRate;
+            temp.z = velocity.z;
+        }
+        player.linearVelocity = (temp);
     }
 
     private void OnCollisionEnter(Collision collision)
