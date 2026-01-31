@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class PillarHealth : MonoBehaviour
@@ -10,11 +9,6 @@ public class PillarHealth : MonoBehaviour
     
     private readonly Stack<GameObject> _parts = new();
     
-    /// <summary>
-    /// Returns true if the pillar is completely destroyed.
-    /// </summary>
-    public bool IsStanding => _parts.Count == 0;
-
     /// <summary>
     /// Applies damage to the pillar by removing the topmost part of its structure.
     /// </summary>
@@ -38,7 +32,5 @@ public class PillarHealth : MonoBehaviour
             
             _parts.Push(child.gameObject);
         }
-
-        Debug.Log($"Pillar health: {_parts.Count} parts");
     }
 }
