@@ -10,7 +10,7 @@
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
-    background-image: url("project://database/Assets/UI%20Toolkit/UISprites/MenuButton.png?fileID=2800000&guid=90ced506aa0f51a4289ec49382f4a6ed&type=3#MenuButton");
+    background-image: url("project://database/Assets/UI%20Toolkit/UISprites/ButtonDefault.png?fileID=2800000&guid=26693b40266bcb34a8f3e47fdd692478&type=3#ButtonDefault");
     background-color: rgba(255, 255, 255, 0);
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
@@ -20,9 +20,13 @@
     -unity-font-style: bold;
     margin-top: 200px;
     transition-duration: 0.2s;
+    background-size: 100% 300%;
 }
 
 .button:hover {
     scale: 1.1 1.1;
-    background-image: url("project://database/Assets/UI%20Toolkit/UISprites/MenuButtonPressed.png?fileID=2800000&guid=7194b907763190b4ab82436aaba93472&type=3#MenuButtonPressed");
+    background-image: url("project://database/Assets/UI%20Toolkit/UISprites/ButtonActive.png?fileID=2800000&guid=b2ee3117c11436f4ba38f0875008ac53&type=3#ButtonActive");
+    background-size: 100% 300%;
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
 }
