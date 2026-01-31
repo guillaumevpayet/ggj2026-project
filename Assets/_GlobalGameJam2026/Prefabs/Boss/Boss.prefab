@@ -483,7 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4303160a3a868874e90331bf2fbd30ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportBounds: {x: 20, y: 20}
+  teleportBounds: {x: 25, y: 20}
   teleportFrequency: 3
   attackFrequency: 10
   maskSwitchFrequency: 5
