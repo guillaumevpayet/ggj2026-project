@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -9,12 +11,16 @@ public class PlayerController : MonoBehaviour{
     public float jumpHeight;
     private bool isJumping = true;
     public float dropRate;
+    public float hitboxActiveTime;
+    [SerializeField] private BoxCollider attackHitbox;
     [SerializeField] private Animator animator;
+    bool readyToAttack = true;
 
     private void Start()
     {
         player = GetComponent<Rigidbody>();
         playerObject = GameObject.Find("PlayerContainer");
+
     }
 
     public void FixedUpdate()
@@ -25,6 +31,8 @@ public class PlayerController : MonoBehaviour{
         bool right = Input.GetKey(KeyCode.S);
         Vector3 temp = new (0, 0, 0);
         Vector3 velocity = player.linearVelocity;
+        bool attack = Input.GetMouseButtonDown(0);
+
 
 
         if (up && !isJumping)
@@ -76,8 +84,12 @@ public class PlayerController : MonoBehaviour{
             animator.SetBool("Jumping", false);
         }
 
-
+        if (attack)
+        {
+            playerAttack();
+        }
     }
+
     private void adjustRotation(Vector3 velocity)
     {
         if (velocity.x < 0)
@@ -129,5 +141,26 @@ public class PlayerController : MonoBehaviour{
                 playerObject.transform.rotation = Quaternion.LookRotation(new Vector3(0, 0, 1));
             }
         }
+    }
+
+    private void playerAttack()
+    {
+        if (!isJumping && readyToAttack)
+        {
+            readyToAttack = false;
+            StartCoroutine(AttackRoutine());
+        }
+    }
+
+    private IEnumerator AttackRoutine()
+    {
+        animator.SetTrigger("Attack");
+        attackHitbox.enabled = true;
+
+        yield return new WaitForSeconds(hitboxActiveTime);
+
+        attackHitbox.enabled = false;
+        yield return new WaitForSeconds(5f);
+        readyToAttack = true;
     }
 }
