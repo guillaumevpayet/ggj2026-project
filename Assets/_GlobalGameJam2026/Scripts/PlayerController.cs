@@ -1,10 +1,15 @@
 using System;
 using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour{
-    private int3 health;
+    [Header("Health Settings")]
+    [SerializeField] private int maxHearts = 3;
+    private int currentHearts;
+
+    public event Action<int> OnHealthChanged;
+
     private Rigidbody player;
     private GameObject playerObject;
     public float speed;
@@ -18,9 +23,25 @@ public class PlayerController : MonoBehaviour{
 
     private void Start()
     {
+        currentHearts = maxHearts;
+        OnHealthChanged?.Invoke(currentHearts);
+
         player = GetComponent<Rigidbody>();
         playerObject = GameObject.Find("PlayerContainer");
 
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHearts -= damage;
+        Debug.Log($"Player took damage. Current hearts: {currentHearts}");
+        OnHealthChanged?.Invoke(currentHearts);
+        
+        if (currentHearts <= 0)
+        {
+            Debug.Log("Player Died");
+            SceneManager.LoadScene("DefeatScreen");
+        }
     }
 
     public void FixedUpdate()

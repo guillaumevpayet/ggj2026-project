@@ -31,7 +31,11 @@ namespace Boss
         {
             if (other.transform == Player)
             {
-                // TODO Deal damage to player
+                var playerController = other.GetComponent<PlayerController>();
+                if (playerController != null)
+                {
+                    playerController.TakeDamage(1);
+                }
                 Debug.Log("Hit player");
             }
             
