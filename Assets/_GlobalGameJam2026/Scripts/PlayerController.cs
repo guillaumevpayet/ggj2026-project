@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour{
         bool right = Input.GetKey(KeyCode.S);
         Vector3 temp = new (0, 0, 0);
         Vector3 velocity = player.linearVelocity;
-        bool attack = Input.GetMouseButtonDown(0);
+        bool attack = Input.GetMouseButton(0);
 
 
 
