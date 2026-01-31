@@ -12,26 +12,30 @@ namespace Boss
         
         private Transform _player;
         private Rigidbody _rb;
+        private BossProjectilePool _pool;
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
         }
 
-        public void Shoot(Transform player)
+        public void Shoot(Vector3 origin, Transform player, BossProjectilePool pool)
         {
+            transform.position = origin;
             var playerDirection = (player.position - transform.position).normalized;
             _rb.linearVelocity = playerDirection * speed;
+            _player = player;
+            _pool = pool;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.transform == _player)
             {
                 // TODO Deal damage to player
             }
             
-            Destroy(gameObject);
+            _pool.AddProjectileToPool(gameObject);
         }
     }
 }

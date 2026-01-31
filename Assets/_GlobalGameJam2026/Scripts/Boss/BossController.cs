@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,13 +11,16 @@ namespace Boss
         // Showing up in Unity
 
         [SerializeField] private Transform player;
-        [SerializeField] private GameObject redProjectilePrefab;
-        [SerializeField] private GameObject blackProjectilePrefab;
-        [SerializeField] private GameObject blueProjectilePrefab;
         [SerializeField] private GameObject redMask;
         [SerializeField] private GameObject blackMask;
         [SerializeField] private GameObject blueMask;
         [SerializeField] private float minimumCooldownAfterAction;
+        [SerializeField] private PillarHealth redPillarHealth;
+        [SerializeField] private PillarHealth blackPillarHealth;
+        [SerializeField] private PillarHealth bluePillarHealth;
+        [SerializeField] private BossProjectilePool redProjectilePool;
+        [SerializeField] private BossProjectilePool blackProjectilePool;
+        [SerializeField] private BossProjectilePool blueProjectilePool;
 
         [Header("Teleportation")]
         [SerializeField] private Vector2 teleportBounds;
@@ -26,9 +30,9 @@ namespace Boss
 
         [Header("Attacks")]
         [SerializeField] private float attackFrequency;
-        [SerializeField] private PillarHealth redPillarHealth;
-        [SerializeField] private PillarHealth blackPillarHealth;
-        [SerializeField] private PillarHealth bluePillarHealth;
+        [SerializeField] private float rateOfFire;
+        [SerializeField] private float attackDuration;
+        [SerializeField] private float vulnerabilityDuration;
 
         [Header("Mask Switching")]
         [SerializeField] private float maskSwitchFrequency;
@@ -45,10 +49,13 @@ namespace Boss
         private int _masksLeft = Enum.GetValues(typeof(MaskColor)).Length;
         private Transform _activeMaskTransform;
         
-        // These two are for interpolating during the jump (teleport)
+        // Jump (teleport) interpolation variables
         private Vector3 _previousPosition;
         private Vector3 _nextPosition;
         private float _jumpProgressRemaining;
+        
+        
+        public bool IsVulnerable { get; private set; }
 
         
         // public void TakeDamage(MaskColor mask)
@@ -90,11 +97,7 @@ namespace Boss
                 SwitchMask();
             }
         }
-
-
-        private void Awake()
-        {
-        }
+        
 
         private void Start()
         {
@@ -220,16 +223,42 @@ namespace Boss
         /// </summary>
         private void Attack()
         {
-            var projectilePrefab = GetProjectilePrefab(_activeMask);
-            var maskPosition = GetMaskGameObject(_activeMask).transform.position;
-            
-            var projectile = Instantiate(
-                projectilePrefab,
-                maskPosition,
-                Quaternion.identity
-            );
-            
-            projectile.GetComponent<BossProjectile>().Shoot(player);
+            IsVulnerable = true;
+            StartCoroutine(WaitAndBecomeInvulnerable());
+
+            switch (_activeMask)
+            {
+                case MaskColor.Red:
+                    StartCoroutine(RedMaskAttack());
+                    EnsureCooldowns(attackDuration);
+                    break;
+                
+                default:
+                    var projectilePool = GetProjectilePool(_activeMask);
+                    var projectile = projectilePool.GetProjectile();
+                    var maskPosition = _activeMaskTransform.position;
+                    projectile.GetComponent<BossProjectile>().Shoot(maskPosition, player, projectilePool);
+                    break;
+            }
+        }
+
+        private IEnumerator RedMaskAttack()
+        {
+            var duration = 0f;
+
+            while (duration < attackDuration)
+            {
+                var projectile = redProjectilePool.GetProjectile();
+                projectile.GetComponent<BossProjectile>().Shoot(_activeMaskTransform.position, player, redProjectilePool);
+                yield return new WaitForSeconds(1f / rateOfFire);
+                duration += Time.deltaTime;
+            }
+        }
+
+        private IEnumerator WaitAndBecomeInvulnerable()
+        {
+            yield return new WaitForSeconds(vulnerabilityDuration);
+            IsVulnerable = false;
         }
 
         /// <summary>
@@ -275,17 +304,17 @@ namespace Boss
             };
 
         /// <summary>
-        /// Returns the projectile prefab corresponding to the given mask.
+        /// Returns the projectile pool corresponding to the given mask.
         /// </summary>
         /// <param name="mask">Mask</param>
-        /// <returns>Projectile prefab</returns>
+        /// <returns>Projectile pool</returns>
         /// <exception cref="ArgumentOutOfRangeException">Mask is not in enum</exception>
-        private GameObject GetProjectilePrefab(MaskColor mask) =>
+        private BossProjectilePool GetProjectilePool(MaskColor mask) =>
             mask switch
             {
-                MaskColor.Red => redProjectilePrefab,
-                MaskColor.Black => blackProjectilePrefab,
-                MaskColor.Blue => blueProjectilePrefab,
+                MaskColor.Red => redProjectilePool,
+                MaskColor.Black => blackProjectilePool,
+                MaskColor.Blue => blueProjectilePool,
                 _ => throw new ArgumentOutOfRangeException()
             };
 
@@ -310,19 +339,24 @@ namespace Boss
             return Quaternion.AngleAxis(yawDelta, Vector3.up) * transform.rotation;
         }
         
-        private void EnsureCooldowns()
+        private void EnsureCooldowns(float cooldown = 0f)
         {
-            if (_teleportTimer < minimumCooldownAfterAction)
+            if (cooldown == 0f)
+            {
+                cooldown = minimumCooldownAfterAction;
+            }
+            
+            if (_teleportTimer < cooldown)
             {
                 ResetTeleportTimer();
             }
             
-            if (_attackTimer < minimumCooldownAfterAction)
+            if (_attackTimer < cooldown)
             {
                 ResetAttackTimer();
             }
             
-            if (_maskSwitchTimer < minimumCooldownAfterAction)
+            if (_maskSwitchTimer < cooldown)
             {
                 ResetMaskSwitchTimer();
             }
