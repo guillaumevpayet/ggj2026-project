@@ -51,8 +51,9 @@ namespace Boss
         private float _jumpProgressRemaining;
 
         
-        public void TakeDamage(MaskColor mask)
+        public void TakeDamage()
         {
+            var mask = _activeMask;
             switch (_masksLeft == 0)
             {
                 case false when mask != _activeMask:

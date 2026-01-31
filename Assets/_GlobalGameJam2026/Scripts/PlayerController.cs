@@ -9,13 +9,12 @@ public class PlayerController : MonoBehaviour{
     public float jumpHeight;
     private bool isJumping = true;
     public float dropRate;
-    private Camera mainCamera;
+    [SerializeField] private Animator animator;
 
     private void Start()
     {
         player = GetComponent<Rigidbody>();
         playerObject = GameObject.Find("PlayerContainer");
-        mainCamera = Camera.main;
     }
 
     public void FixedUpdate()
@@ -26,6 +25,7 @@ public class PlayerController : MonoBehaviour{
         bool right = Input.GetKey(KeyCode.S);
         Vector3 temp = new (0, 0, 0);
         Vector3 velocity = player.linearVelocity;
+
 
         if (up && !isJumping)
         {
@@ -61,6 +61,21 @@ public class PlayerController : MonoBehaviour{
             isJumping = false;
         }
         adjustRotation(temp);
+        if (temp != new Vector3(0, 0, 0))
+        {
+            animator.SetFloat("Speed", 5);
+        }else
+        {
+            animator.SetFloat("Speed", 0);
+        }
+        if (isJumping)
+        {
+            animator.SetBool("Jumping", true);
+        } else
+        {
+            animator.SetBool("Jumping", false);
+        }
+
 
     }
     private void adjustRotation(Vector3 velocity)
