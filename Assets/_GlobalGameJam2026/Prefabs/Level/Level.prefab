@@ -874,33 +874,13 @@ PrefabInstance:
     - {fileID: 817080454475566505, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
     - {fileID: 8633333544001189579, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8962280648543050433, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6851779557883009967}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
 --- !u!4 &7180872799012467495 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6994004599690295349, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
   m_PrefabInstance: {fileID: 191446841745459986}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &9135636675670561235 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8962280648543050433, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
-  m_PrefabInstance: {fileID: 191446841745459986}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6851779557883009967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9135636675670561235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 148de3aa9b5e44b69eb95d9e204925ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PillarHealth
 --- !u!1001 &302331354681148067
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2894,33 +2874,13 @@ PrefabInstance:
     - {fileID: 4388089654963514170, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
     - {fileID: 7974607983029145014, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8962280648543050433, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3761496114441829601}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
 --- !u!4 &5654155456116947647 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6994004599690295349, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
   m_PrefabInstance: {fileID: 3420530433686962826}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5987606668229679179 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8962280648543050433, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
-  m_PrefabInstance: {fileID: 3420530433686962826}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3761496114441829601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5987606668229679179}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 148de3aa9b5e44b69eb95d9e204925ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PillarHealth
 --- !u!1001 &3736989626535524579
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3718,33 +3678,13 @@ PrefabInstance:
     - {fileID: 8903137734942975188, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
     - {fileID: 6919575518066422940, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8962280648543050433, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 99826544327376662}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
 --- !u!4 &2416190119993524816 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6994004599690295349, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
   m_PrefabInstance: {fileID: 4649889909257615973}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &4388706127550685348 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8962280648543050433, guid: 733c8ab55073d8847b7fff10bb5b8ac4, type: 3}
-  m_PrefabInstance: {fileID: 4649889909257615973}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &99826544327376662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4388706127550685348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 148de3aa9b5e44b69eb95d9e204925ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PillarHealth
 --- !u!1001 &4814961690933381331
 PrefabInstance:
   m_ObjectHideFlags: 0
