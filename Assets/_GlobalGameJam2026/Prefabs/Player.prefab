@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2512309839074479253}
   - component: {fileID: 3984328610966091648}
   m_Layer: 7
-  m_Name: PlayerContainer
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,9 +74,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b3de1f1aa8e854aa21d60dd492bda7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 70
+  speed: 20
   jumpHeight: 50
-  dropRate: 10
+  dropRate: 20
   animator: {fileID: 727993127031021444}
 --- !u!136 &3984328610966091648
 CapsuleCollider:
@@ -115,7 +115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b6f701789f33e4f648f7da06a4c0df65, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b6f701789f33e4f648f7da06a4c0df65, type: 3}
       propertyPath: m_LocalPosition.z

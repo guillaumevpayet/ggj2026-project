@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &179438098 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3725162029152294301, guid: 7703252a832d8491a8d3cf12bcaf2bda, type: 3}
+  m_PrefabInstance: {fileID: 657714348}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148de3aa9b5e44b69eb95d9e204925ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &313537516
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,7 +185,6 @@ Transform:
   - {fileID: 1435309644}
   - {fileID: 372171298}
   - {fileID: 1035541189}
-  - {fileID: 1538572101}
   - {fileID: 618310738}
   - {fileID: 546005814}
   - {fileID: 881411974}
@@ -451,7 +461,7 @@ Transform:
   m_GameObject: {fileID: 372171297}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20.18, y: -3, z: 58.46}
+  m_LocalPosition: {x: -20.18, y: -3, z: 59.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -923,11 +933,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 120, y: 0.6154766, z: 120}
   m_Center: {x: 7.236722, y: 9.602555, z: -0.057738304}
+--- !u!114 &1510836678 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8186966878552827114, guid: 7703252a832d8491a8d3cf12bcaf2bda, type: 3}
+  m_PrefabInstance: {fileID: 657714348}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148de3aa9b5e44b69eb95d9e204925ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1798171536 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6980146346071789746, guid: a580f59a40fa28343af9240e3ea12848, type: 3}
   m_PrefabInstance: {fileID: 9218751015240579255}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2124036789 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6651252952496303474, guid: 7703252a832d8491a8d3cf12bcaf2bda, type: 3}
+  m_PrefabInstance: {fileID: 657714348}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148de3aa9b5e44b69eb95d9e204925ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5031861539727445508
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -946,7 +978,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2484627278735247037, guid: 26a076749447bdc46b5fb6b7bc204ce4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 41.471
+      value: 40.080982
       objectReference: {fileID: 0}
     - target: {fileID: 2484627278735247037, guid: 26a076749447bdc46b5fb6b7bc204ce4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1004,15 +1036,15 @@ PrefabInstance:
     - target: {fileID: 5807457666719408023, guid: 848c461fc0768364489f29cec1f0aa4d, type: 3}
       propertyPath: redPillarHealth
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 179438098}
     - target: {fileID: 5807457666719408023, guid: 848c461fc0768364489f29cec1f0aa4d, type: 3}
       propertyPath: bluePillarHealth
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2124036789}
     - target: {fileID: 5807457666719408023, guid: 848c461fc0768364489f29cec1f0aa4d, type: 3}
       propertyPath: blackPillarHealth
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1510836678}
     - target: {fileID: 6622942501430703803, guid: 848c461fc0768364489f29cec1f0aa4d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1092,7 +1124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6980146346071789746, guid: a580f59a40fa28343af9240e3ea12848, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.471
+      value: 3.0809817
       objectReference: {fileID: 0}
     - target: {fileID: 6980146346071789746, guid: a580f59a40fa28343af9240e3ea12848, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1142,7 +1174,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 330585546}
   - {fileID: 657714348}
   - {fileID: 9218751015240579255}
   - {fileID: 5031861539727445508}
