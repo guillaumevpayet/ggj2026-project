@@ -42,8 +42,9 @@ namespace Boss
         private MaskColor _activeMask;
         private readonly HashSet<MaskColor> _pillarDown = new();
         private int _masksLeft = Enum.GetValues(typeof(MaskColor)).Length;
-        private Quaternion _desiredRotation;
+        private Transform _activeMaskTransform;
 
+        
         public void TakeDamage(MaskColor mask)
         {
             switch (_masksLeft == 0)
@@ -172,9 +173,11 @@ namespace Boss
         /// </summary>
         private void HandleLerps()
         {
+            var desiredRotation = GetDesiredRotation();
+            
             transform.rotation = Quaternion.RotateTowards(
                 transform.rotation,
-                _desiredRotation,
+                desiredRotation,
                 rotationSpeed * Time.deltaTime
             );
         }
@@ -188,29 +191,8 @@ namespace Boss
             var randomZ = Random.Range(-teleportBounds.y, teleportBounds.y);
             transform.position = new Vector3(randomX, transform.position.y, randomZ);
             
-            // Rotate only around Y (ignore vertical difference).
-            var maskTransform = GetMaskGameObject(_activeMask).transform;
-
-            // Rotate only around Y (ignore vertical difference).
-            var toPlayer = player.position - transform.position;
-            toPlayer.y = 0f;
-
-            var toMask = maskTransform.position - transform.position;
-            toMask.y = 0f;
-
-            // Avoid invalid rotations when something is exactly on top/center.
-            if (toPlayer.sqrMagnitude <= 0.0001f || toMask.sqrMagnitude <= 0.0001f)
-                return;
-
-            var playerDir = toPlayer.normalized;
-            var maskDir = toMask.normalized;
-
-            // Angle needed to rotate the boss around Y so maskDir aligns with playerDir.
-            var yawDelta = Vector3.SignedAngle(maskDir, playerDir, Vector3.up);
-
-            // Apply instantly (teleport is an instant action).
-            transform.rotation = Quaternion.AngleAxis(yawDelta, Vector3.up) * transform.rotation;
-            _desiredRotation = transform.rotation;
+            // Apply rotation instantly (teleport is an instant action).
+            transform.rotation = GetDesiredRotation();
         }
 
         /// <summary>
@@ -254,24 +236,7 @@ namespace Boss
         private void SetMaskActive(MaskColor mask)
         {
             var maskGameObject = GetMaskGameObject(mask);
-            
-            // Rotate only around Y so the ACTIVE MASK direction matches the player direction.
-            var toPlayer = player.position - transform.position;
-            toPlayer.y = 0f;
-
-            var toMask = maskGameObject.transform.position - transform.position;
-            toMask.y = 0f;
-
-            // Avoid invalid rotations when something is exactly on top/center.
-            if (toPlayer.sqrMagnitude <= 0.0001f || toMask.sqrMagnitude <= 0.0001f)
-                return;
-
-            var playerDir = toPlayer.normalized;
-            var maskDir = toMask.normalized;
-
-            // Angle needed to rotate the boss around Y so maskDir aligns with playerDir.
-            var yawDelta = Vector3.SignedAngle(maskDir, playerDir, Vector3.up);
-            _desiredRotation = Quaternion.AngleAxis(yawDelta, Vector3.up) * transform.rotation;
+            _activeMaskTransform = maskGameObject.transform;
         }
 
         /// <summary>
@@ -304,6 +269,27 @@ namespace Boss
                 _ => throw new ArgumentOutOfRangeException()
             };
 
+        private Quaternion GetDesiredRotation()
+        {
+            // Rotate only around Y so the ACTIVE MASK direction matches the player direction.
+            var toPlayer = player.position - transform.position;
+            toPlayer.y = 0f;
+
+            var toMask = _activeMaskTransform.position - transform.position;
+            toMask.y = 0f;
+
+            // Avoid invalid rotations when something is exactly on top/center.
+            if (toPlayer.sqrMagnitude <= 0.0001f || toMask.sqrMagnitude <= 0.0001f)
+                return Quaternion.identity;
+
+            var playerDir = toPlayer.normalized;
+            var maskDir = toMask.normalized;
+
+            // Angle needed to rotate the boss around Y so maskDir aligns with playerDir.
+            var yawDelta = Vector3.SignedAngle(maskDir, playerDir, Vector3.up);
+            return Quaternion.AngleAxis(yawDelta, Vector3.up) * transform.rotation;
+        }
+        
         private void EnsureCooldowns()
         {
             if (_teleportTimer < minimumCooldownAfterAction)
