@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Boss
@@ -96,6 +97,10 @@ namespace Boss
             if (_masksLeft > 0)
             {
                 SwitchMask();
+            }
+            else
+            {
+                SceneManager.LoadScene("VictoryScreen");
             }
         }
 
