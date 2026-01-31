@@ -6,32 +6,36 @@ namespace Boss
     {
         // Showing up in Unity
         
-        [SerializeField] private float speed;
+        [SerializeField] protected float speed;
         
         // -------------------
         
-        private Transform _player;
-        private Rigidbody _rb;
+        protected Transform Player;
+        protected BossProjectilePool Pool;
+        private Vector3 _direction;
 
-        private void Awake()
+        public virtual void Shoot(Vector3 origin, Transform player, BossProjectilePool pool, Vector3? direction = null)
         {
-            _rb = GetComponent<Rigidbody>();
+            transform.localPosition = origin;
+            _direction = direction ?? (player.position - transform.position).normalized;
+            Player = player;
+            Pool = pool;
         }
 
-        public void Shoot(Transform player)
+        private void Update()
         {
-            var playerDirection = (player.position - transform.position).normalized;
-            _rb.linearVelocity = playerDirection * speed;
+            transform.localPosition += _direction * (Time.deltaTime * speed);
         }
 
-        private void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.transform == Player)
             {
                 // TODO Deal damage to player
+                Debug.Log("Hit player");
             }
             
-            Destroy(gameObject);
+            Pool.AddProjectileToPool(gameObject);
         }
     }
 }
