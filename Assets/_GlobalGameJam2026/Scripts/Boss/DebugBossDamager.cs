@@ -31,7 +31,7 @@ namespace Boss
             
             var damageType = (MaskColor) Random.Range(0, Enum.GetValues(typeof(MaskColor)).Length);
             Debug.Log($"Bob is taking {damageType} damage");
-            _boss.TakeDamage(damageType);
+            _boss.TakeDamage();
             ResetTimer();
         }
         
