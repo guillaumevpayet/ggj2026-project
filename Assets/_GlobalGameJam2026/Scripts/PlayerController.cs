@@ -85,9 +85,14 @@ public class PlayerController : MonoBehaviour{
             temp.z = velocity.z;
         }
         player.linearVelocity = (temp);
-        if (playerObject.transform.position.y <= 4.1)
+        if (playerObject.transform.position.y <= 3.1)
         {
             isJumping = false;
+        }
+        if (playerObject.transform.position.y < 1.5)
+        {
+            isJumping = true;
+            playerObject.transform.position = new Vector3(playerObject.transform.position.x, 10, playerObject.transform.position.z);
         }
         adjustRotation(temp);
         if (temp != new Vector3(0, 0, 0))
