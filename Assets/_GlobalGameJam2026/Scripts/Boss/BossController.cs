@@ -80,8 +80,7 @@ namespace Boss
 
             if (_masksLeft == 0)
             {
-                // TODO Player wins!
-                // Debug.Log("Player wins!");
+                SceneManager.LoadScene("VictoryScreen");
                 return;
             }
 
@@ -109,10 +108,6 @@ namespace Boss
             if (_masksLeft > 0)
             {
                 SwitchMask();
-            }
-            else
-            {
-                SceneManager.LoadScene("VictoryScreen");
             }
         }
 
@@ -208,7 +203,6 @@ namespace Boss
         private void Teleport()
         {
             // Debug.Log("Bob teleports!");
-            StartCoroutine(WaitAndDoSomething());
             var randomX = Random.Range(-teleportBounds.x, teleportBounds.x);
             var randomZ = Random.Range(-teleportBounds.y, teleportBounds.y);
             var nextPosition = new Vector3(randomX, groundHeight, randomZ);
@@ -353,7 +347,6 @@ namespace Boss
         private void SwitchMask()
         {
             // Debug.Log("Bob switches masks!");
-            StartCoroutine(WaitAndDoSomething());
             var newMask = _activeMask;
 
             // Pick a mask that is not the current one and is not down.
@@ -364,6 +357,7 @@ namespace Boss
 
             _activeMask = newMask;
             SetMaskActive(_activeMask);
+            StartCoroutine(WaitAndDoSomething());
         }
 
         /// <summary>
