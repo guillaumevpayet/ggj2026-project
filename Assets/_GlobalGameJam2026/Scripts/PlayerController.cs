@@ -20,6 +20,15 @@ public class PlayerController : MonoBehaviour{
     [SerializeField] private BoxCollider attackHitbox;
     [SerializeField] private Animator animator;
     bool readyToAttack = true;
+    [SerializeField] private Renderer playerRenderer;
+    [SerializeField] private Material white;
+    
+    private Material _originalMaterial;
+
+    private void Awake()
+    {
+        _originalMaterial = playerRenderer.material;
+    }
 
     private void Start()
     {
@@ -36,11 +45,24 @@ public class PlayerController : MonoBehaviour{
         currentHearts -= damage;
         Debug.Log($"Player took damage. Current hearts: {currentHearts}");
         OnHealthChanged?.Invoke(currentHearts);
+        StartCoroutine(Blink());
         
         if (currentHearts <= 0)
         {
             Debug.Log("Player Died");
             SceneManager.LoadScene("DefeatScreen");
+        }
+    }
+
+
+    private IEnumerator Blink()
+    {
+        for (var i = 0; i < 4; i++)
+        {
+            playerRenderer.material = white;
+            yield return new WaitForSeconds(0.1f);
+            playerRenderer.material = _originalMaterial;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 

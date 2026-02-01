@@ -21,15 +21,10 @@ public class PillarHealth : MonoBehaviour
 
     private void Awake()
     {
-        var children = GetComponentsInChildren<Transform>();
+        var children = GetComponentsInChildren<MeshFilter>();
         
         foreach (var child in children)
         {
-            if (child == transform)
-            {
-                continue;
-            }
-            
             _parts.Push(child.gameObject);
         }
     }

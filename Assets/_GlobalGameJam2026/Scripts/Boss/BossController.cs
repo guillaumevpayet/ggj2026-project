@@ -26,13 +26,15 @@ namespace Boss
         [SerializeField] private BossProjectilePool redProjectilePool;
         [SerializeField] private BossProjectilePool blackProjectilePool;
         [SerializeField] private BossProjectilePool blueProjectilePool;
-        [SerializeField] private Material bossMaterial;
+        [SerializeField] private Renderer bossRenderer;
+        [SerializeField] private Material white;
 
         [Header("Teleportation")]
         [SerializeField] private Vector2 teleportBounds;
         [SerializeField] private float teleportFrequency;
         [SerializeField] private float teleportDuration;
         [SerializeField] private float teleportMaxHeight;
+        [SerializeField] private float groundHeight;
 
         [Header("Attacks")]
         [SerializeField] private float attackFrequency;
@@ -56,6 +58,7 @@ namespace Boss
         private int _masksLeft = Enum.GetValues(typeof(MaskColor)).Length;
         private Transform _activeMaskTransform;
         private bool _isVulnerable;
+        private Material _bossMaterial;
 
 
         /// <summary>
@@ -71,6 +74,9 @@ namespace Boss
             }
 
             _isVulnerable = false;
+            _bossMaterial.SetFloat(AttackingMaterialId, 0f);
+            StopAllCoroutines();
+            StartCoroutine(Blink());
 
             if (_masksLeft == 0)
             {
@@ -92,6 +98,7 @@ namespace Boss
 
             if (!isPillarDown)
             {
+                StartCoroutine(WaitAndDoSomething());
                 return;
             }
 
@@ -106,15 +113,18 @@ namespace Boss
             else
             {
                 SceneManager.LoadScene("VictoryScreen");
-                _isVulnerable = true;
-                bossMaterial.SetFloat(AttackingMaterialId, 1f);
             }
         }
 
 
+        private void Awake()
+        {
+            _bossMaterial = bossRenderer.material;
+        }
+
         private void Start()
         {
-            bossMaterial.SetFloat(AttackingMaterialId, 0f);
+            _bossMaterial.SetFloat(AttackingMaterialId, 0f);
             SetMaskActive(_activeMask);
             StartCoroutine(WaitAndDoSomething(delayAtStart));
         }
@@ -126,7 +136,19 @@ namespace Boss
 
         private void OnDisable()
         {
-            bossMaterial.SetFloat(AttackingMaterialId, 0f);
+            _bossMaterial.SetFloat(AttackingMaterialId, 0f);
+        }
+
+
+        private IEnumerator Blink()
+        {
+            for (var i = 0; i < 4; i++)
+            {
+                bossRenderer.material = white;
+                yield return new WaitForSeconds(0.1f);
+                bossRenderer.material = _bossMaterial;
+                yield return new WaitForSeconds(0.1f);
+            }
         }
 
 
@@ -189,7 +211,7 @@ namespace Boss
             StartCoroutine(WaitAndDoSomething());
             var randomX = Random.Range(-teleportBounds.x, teleportBounds.x);
             var randomZ = Random.Range(-teleportBounds.y, teleportBounds.y);
-            var nextPosition = new Vector3(randomX, transform.position.y, randomZ);
+            var nextPosition = new Vector3(randomX, groundHeight, randomZ);
             StartCoroutine(Jump(nextPosition));
         }
 
@@ -212,6 +234,7 @@ namespace Boss
             }
 
             transform.position = nextPosition;
+            StartCoroutine(WaitAndDoSomething());
         }
 
         /// <summary>
@@ -219,7 +242,6 @@ namespace Boss
         /// </summary>
         private void Attack()
         {
-            Debug.Log("Bob attacks!");
             _isVulnerable = true;
             StartCoroutine(WaitAndBecomeInvulnerable());
 
@@ -304,7 +326,7 @@ namespace Boss
             while (timer > 0f)
             {
                 var attacking = 1f - timer / duration;
-                bossMaterial.SetFloat(AttackingMaterialId, attacking);
+                _bossMaterial.SetFloat(AttackingMaterialId, attacking);
                 timer -= Time.deltaTime;
                 yield return null;
             }
@@ -316,12 +338,12 @@ namespace Boss
             while (timer > 0f)
             {
                 var attacking = timer / duration;
-                bossMaterial.SetFloat(AttackingMaterialId, attacking);
+                _bossMaterial.SetFloat(AttackingMaterialId, attacking);
                 timer -= Time.deltaTime;
                 yield return null;
             }
 
-            bossMaterial.SetFloat(AttackingMaterialId, 0f);
+            _bossMaterial.SetFloat(AttackingMaterialId, 0f);
             StartCoroutine(WaitAndDoSomething());
         }
 

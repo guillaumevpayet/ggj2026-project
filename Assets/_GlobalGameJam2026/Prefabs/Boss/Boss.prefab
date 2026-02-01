@@ -336,7 +336,7 @@ MonoBehaviour:
   redMask: {fileID: 2338838678219782568}
   blackMask: {fileID: 2822094895588673854}
   blueMask: {fileID: 7238643505924293577}
-  delayAtStart: 0
+  delayAtStart: 5
   minimumCooldownAfterAction: 0.5
   maximumCooldownAfterAction: 2
   redPillarHealth: {fileID: 0}
@@ -345,15 +345,17 @@ MonoBehaviour:
   redProjectilePool: {fileID: 7788749935169136}
   blackProjectilePool: {fileID: 638852380521051773}
   blueProjectilePool: {fileID: 6568839469350901833}
-  bossMaterial: {fileID: 2100000, guid: d9151f5e4b617ce42b232ab29a822c6f, type: 2}
+  bossRenderer: {fileID: 7940363416705947239}
+  white: {fileID: 2100000, guid: 51fff602748a49d4c885c2c16e3d054b, type: 2}
   teleportBounds: {x: 26, y: 26}
   teleportFrequency: 3
   teleportDuration: 0.8
   teleportMaxHeight: 20
+  groundHeight: 1.6
   attackFrequency: 4
   rateOfFire: 20
   attackDuration: 2
-  vulnerabilityDuration: 4
+  vulnerabilityDuration: 5
   shockwaveCount: 3
   spiralRateOfFire: 5
   spiralRotationSpeed: 130
@@ -473,3 +475,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!137 &7940363416705947239 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -5064157799631012583, guid: fc45fec15eb8547c8b948e16638c80d6, type: 3}
+  m_PrefabInstance: {fileID: 6307758823343647614}
+  m_PrefabAsset: {fileID: 0}
