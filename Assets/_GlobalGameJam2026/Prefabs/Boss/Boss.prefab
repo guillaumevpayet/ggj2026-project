@@ -345,6 +345,7 @@ MonoBehaviour:
   redProjectilePool: {fileID: 7788749935169136}
   blackProjectilePool: {fileID: 638852380521051773}
   blueProjectilePool: {fileID: 6568839469350901833}
+  bossMaterial: {fileID: 2100000, guid: d9151f5e4b617ce42b232ab29a822c6f, type: 2}
   teleportBounds: {x: 26, y: 26}
   teleportFrequency: 3
   teleportDuration: 0.3
@@ -412,6 +413,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BobTheBlob
       objectReference: {fileID: 0}
+    - target: {fileID: 6828605401498817424, guid: fc45fec15eb8547c8b948e16638c80d6, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6828605401498817424, guid: fc45fec15eb8547c8b948e16638c80d6, type: 3}
+      propertyPath: 'm_Materials.Array.data[7]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f34b497b914396b4aa790562a3e38061, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
