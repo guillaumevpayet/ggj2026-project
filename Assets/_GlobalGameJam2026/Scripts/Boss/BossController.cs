@@ -9,6 +9,8 @@ namespace Boss
 {
     public class BossController : MonoBehaviour
     {
+        private static readonly int AttackingMaterialId = Shader.PropertyToID("_Attacking");
+
         // Showing up in Unity
 
         [SerializeField] private Transform player;
@@ -24,6 +26,7 @@ namespace Boss
         [SerializeField] private BossProjectilePool redProjectilePool;
         [SerializeField] private BossProjectilePool blackProjectilePool;
         [SerializeField] private BossProjectilePool blueProjectilePool;
+        [SerializeField] private Material bossMaterial;
 
         [Header("Teleportation")]
         [SerializeField] private Vector2 teleportBounds;
@@ -52,12 +55,7 @@ namespace Boss
         private readonly HashSet<MaskColor> _pillarDown = new();
         private int _masksLeft = Enum.GetValues(typeof(MaskColor)).Length;
         private Transform _activeMaskTransform;
-
-
-        /// <summary>
-        /// Whether the boss is currently vulnerable to damage.
-        /// </summary>
-        public bool IsVulnerable { get; private set; }
+        private bool _isVulnerable;
 
 
         /// <summary>
@@ -67,6 +65,13 @@ namespace Boss
         /// </summary>
         public void TakeDamage()
         {
+            if (!_isVulnerable)
+            {
+                return;
+            }
+
+            _isVulnerable = false;
+
             if (_masksLeft == 0)
             {
                 // TODO Player wins!
@@ -101,12 +106,15 @@ namespace Boss
             else
             {
                 SceneManager.LoadScene("VictoryScreen");
+                _isVulnerable = true;
+                bossMaterial.SetFloat(AttackingMaterialId, 1f);
             }
         }
 
 
         private void Start()
         {
+            bossMaterial.SetFloat(AttackingMaterialId, 0f);
             SetMaskActive(_activeMask);
             StartCoroutine(WaitAndDoSomething(delayAtStart));
         }
@@ -114,6 +122,11 @@ namespace Boss
         private void Update()
         {
             HandleLerps();
+        }
+
+        private void OnDisable()
+        {
+            bossMaterial.SetFloat(AttackingMaterialId, 0f);
         }
 
 
@@ -137,7 +150,7 @@ namespace Boss
             var range = teleportFrequency
                         + (includeAttacking ? attackFrequency : 0f)
                         + (includeSwitchingMasks ? maskSwitchFrequency : 0f);
-            
+
             var action = Random.Range(0f, range);
 
             if (action <= teleportFrequency)
@@ -185,7 +198,7 @@ namespace Boss
         {
             var progress = 0f;
             var originalPosition = transform.position;
-            
+
             while (progress < 1f)
             {
                 var position = Vector3.Lerp(originalPosition, nextPosition, progress);
@@ -198,7 +211,7 @@ namespace Boss
                 progress += Time.deltaTime / teleportDuration;
                 yield return null;
             }
-            
+
             transform.position = nextPosition;
         }
 
@@ -208,7 +221,7 @@ namespace Boss
         private void Attack()
         {
             Debug.Log("Bob attacks!");
-            IsVulnerable = true;
+            _isVulnerable = true;
             StartCoroutine(WaitAndBecomeInvulnerable());
 
             switch (_activeMask)
@@ -216,7 +229,7 @@ namespace Boss
                 case MaskColor.Red:
                     StartCoroutine(MachineGunAttack());
                     break;
-                
+
                 case MaskColor.Black:
                     StartCoroutine(ShockwaveAttack());
                     break;
@@ -286,8 +299,30 @@ namespace Boss
 
         private IEnumerator WaitAndBecomeInvulnerable()
         {
+            const float duration = 0.2f;
+            var timer = duration;
+
+            while (timer > 0f)
+            {
+                var attacking = 1f - timer / duration;
+                bossMaterial.SetFloat(AttackingMaterialId, attacking);
+                timer -= Time.deltaTime;
+                yield return null;
+            }
+
             yield return new WaitForSeconds(vulnerabilityDuration);
-            IsVulnerable = false;
+            _isVulnerable = false;
+            timer = duration;
+
+            while (timer > 0f)
+            {
+                var attacking = timer / duration;
+                bossMaterial.SetFloat(AttackingMaterialId, attacking);
+                timer -= Time.deltaTime;
+                yield return null;
+            }
+
+            bossMaterial.SetFloat(AttackingMaterialId, 0f);
             StartCoroutine(WaitAndDoSomething());
         }
 
