@@ -902,7 +902,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7629704153857101914}
-  - component: {fileID: 3913828598980295709}
   m_Layer: 0
   m_Name: Level
   m_TagString: Untagged
@@ -932,22 +931,6 @@ Transform:
   - {fileID: 2682284215630969684}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3913828598980295709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8693263314347135266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61aa869b465a642b28c45bdd793ec619, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  backgroundMusic: {fileID: 8300000, guid: aaf68dc1f719f411da3dcf75f35e37aa, type: 3}
-  playOnAwake: 1
-  loop: 1
-  volume: 0.5
 --- !u!1001 &59937686098000403
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12262,7 +12245,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: ab5362ab58f444e7c9718c47046394c9, type: 2}
     - target: {fileID: -4720168162678092576, guid: a3ff50cb6f97a4859b77f4f301ed93fd, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 117214286460000749, guid: a3ff50cb6f97a4859b77f4f301ed93fd, type: 3}
       propertyPath: m_IsActive

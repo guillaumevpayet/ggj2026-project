@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4671986628710675394}
   m_Layer: 6
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 5807457666719408023}
   m_Layer: 6
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -347,7 +347,7 @@ MonoBehaviour:
   blueProjectilePool: {fileID: 6568839469350901833}
   bossRenderer: {fileID: 7940363416705947239}
   white: {fileID: 2100000, guid: 51fff602748a49d4c885c2c16e3d054b, type: 2}
-  teleportBounds: {x: 26, y: 26}
+  teleportBounds: {x: 25, y: 25}
   teleportFrequency: 3
   teleportDuration: 0.8
   teleportMaxHeight: 20

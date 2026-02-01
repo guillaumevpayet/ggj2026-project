@@ -31,13 +31,6 @@ public class MainMenuEvents : MonoBehaviour
         _exitButton.RegisterCallback<ClickEvent>(OnExitButtonClick);
     }
 
-
-    private void OnDisable()
-    {
-        _startButton.UnregisterCallback<ClickEvent>(OnPlayGameClick);
-        _exitButton.UnregisterCallback<ClickEvent>(OnExitButtonClick);
-    }
-
     private void OnExitButtonClick(ClickEvent evt)
     {
         Debug.Log("EXIT BUTTON PRESSED!");
@@ -48,5 +41,4 @@ public class MainMenuEvents : MonoBehaviour
     {
         SceneManager.LoadScene("MainScene");
     }
-
 }
