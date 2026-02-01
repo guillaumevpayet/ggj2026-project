@@ -14,11 +14,14 @@ namespace Boss
         
         // -------------------
         
+        private bool _hasHitPlayer;
+
         public override void Shoot(Vector3 origin, Transform player, BossProjectilePool pool, Vector3? direction = null)
         {
             transform.localPosition = origin;
             Player = player;
             Pool = pool;
+            _hasHitPlayer = false;
         }
 
         private void Update()
@@ -30,10 +33,15 @@ namespace Boss
             var scaledInnerRadius = innerRadius * transform.localScale.x;
             var scaledOuterRadius = outerRadius * transform.localScale.x;
 
-            if (distance >= scaledInnerRadius && distance <= scaledOuterRadius && playerPosition.y <= height)
+            if (!_hasHitPlayer && distance >= scaledInnerRadius && distance <= scaledOuterRadius && playerPosition.y <= height)
             {
-                // TODO Deal damage to player
-                Debug.Log("Hit player");
+                var playerController = Player.GetComponent<PlayerController>();
+                if (playerController != null)
+                {
+                    playerController.TakeDamage(1);
+                    Debug.Log("Hit player");
+                    _hasHitPlayer = true;
+                }
             }
 
             if (transform.localScale.x >= maxScale)
