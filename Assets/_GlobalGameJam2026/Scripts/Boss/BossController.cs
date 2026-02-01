@@ -75,7 +75,7 @@ namespace Boss
             if (_masksLeft == 0)
             {
                 // TODO Player wins!
-                Debug.Log("Player wins!");
+                // Debug.Log("Player wins!");
                 return;
             }
 
@@ -88,7 +88,7 @@ namespace Boss
             };
 
             var isPillarDown = pillar.TakeDamage();
-            Debug.Log("Bob: ouch!");
+            // Debug.Log("Bob: ouch!");
 
             if (!isPillarDown)
             {
@@ -97,7 +97,7 @@ namespace Boss
 
             _pillarDown.Add(_activeMask);
             _masksLeft -= 1;
-            Debug.Log($"Bob lost the {_activeMask} mask.");
+            // Debug.Log($"Bob lost the {_activeMask} mask.");
 
             if (_masksLeft > 0)
             {
@@ -141,7 +141,6 @@ namespace Boss
                 waitDuration = Random.Range(minimumCooldownAfterAction, maximumCooldownAfterAction);
             }
 
-            Debug.Log($"Bob waits for {waitDuration} seconds.");
             yield return new WaitForSeconds(waitDuration);
 
             var includeSwitchingMasks = _masksLeft > 1;
@@ -186,7 +185,7 @@ namespace Boss
         /// </summary>
         private void Teleport()
         {
-            Debug.Log("Bob teleports!");
+            // Debug.Log("Bob teleports!");
             StartCoroutine(WaitAndDoSomething());
             var randomX = Random.Range(-teleportBounds.x, teleportBounds.x);
             var randomZ = Random.Range(-teleportBounds.y, teleportBounds.y);
@@ -331,7 +330,7 @@ namespace Boss
         /// </summary>
         private void SwitchMask()
         {
-            Debug.Log("Bob switches masks!");
+            // Debug.Log("Bob switches masks!");
             StartCoroutine(WaitAndDoSomething());
             var newMask = _activeMask;
 
