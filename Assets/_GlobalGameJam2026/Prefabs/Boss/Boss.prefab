@@ -348,7 +348,7 @@ MonoBehaviour:
   bossMaterial: {fileID: 2100000, guid: d9151f5e4b617ce42b232ab29a822c6f, type: 2}
   teleportBounds: {x: 26, y: 26}
   teleportFrequency: 3
-  teleportDuration: 0.3
+  teleportDuration: 0.8
   teleportMaxHeight: 20
   attackFrequency: 4
   rateOfFire: 20
