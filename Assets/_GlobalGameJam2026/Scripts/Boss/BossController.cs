@@ -311,6 +311,7 @@ namespace Boss
             }
 
             yield return new WaitForSeconds(vulnerabilityDuration);
+            _isVulnerable = false;
             timer = duration;
 
             while (timer > 0f)
@@ -321,7 +322,7 @@ namespace Boss
                 yield return null;
             }
 
-            _isVulnerable = false;
+            bossMaterial.SetFloat(AttackingMaterialId, 0f);
             StartCoroutine(WaitAndDoSomething());
         }
 
