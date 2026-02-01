@@ -1,8 +1,8 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/USS/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=99767c47f01db3542ba554bc8ea37807&amp;type=3#MainMenuStyle" />
+    <Style src="project://database/Assets/UI%20Toolkit/USS/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=99767c47f01db3542ba554bc8ea37807&amp;type=3#MainMenuStyle"/>
     <ui:VisualElement name="Container" style="flex-grow: 1; background-image: none;">
-        <ui:Label text="Bob Defeated!" name="Title" class="header" style="align-self: center; font-size: 150px; color: rgb(255, 255, 255); margin-top: 100px;" />
-        <ui:Button text="Replay?" name="ReplayButton" class="button" style="margin-top: 150px;" />
-        <ui:Button text="Menu" name="MenuButton" class="button" />
+        <ui:Label text="Bob Defeated!" name="Title" class="header" style="align-self: center; font-size: 150px; color: rgb(255, 255, 255); margin-top: 35px;"/>
+        <ui:Button text="Replay?" name="ReplayButton" class="button" style="margin-top: 511px;"/>
+        <ui:Button text="Menu" name="MenuButton" class="button"/>
     </ui:VisualElement>
 </ui:UXML>
