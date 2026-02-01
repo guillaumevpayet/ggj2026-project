@@ -172,6 +172,8 @@ MonoBehaviour:
   hitboxActiveTime: 0.1
   attackHitbox: {fileID: 5628864308727509507}
   animator: {fileID: 727993127031021444}
+  playerRenderer: {fileID: 2217165116575083709}
+  white: {fileID: 2100000, guid: 51fff602748a49d4c885c2c16e3d054b, type: 2}
 --- !u!1001 &8860529849044311903
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -232,6 +234,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 727993127031021444}
   m_SourcePrefab: {fileID: 100100000, guid: b6f701789f33e4f648f7da06a4c0df65, type: 3}
+--- !u!137 &2217165116575083709 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7219867370428330978, guid: b6f701789f33e4f648f7da06a4c0df65, type: 3}
+  m_PrefabInstance: {fileID: 8860529849044311903}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8518423602243379726 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b6f701789f33e4f648f7da06a4c0df65, type: 3}

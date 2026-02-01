@@ -336,7 +336,7 @@ MonoBehaviour:
   redMask: {fileID: 2338838678219782568}
   blackMask: {fileID: 2822094895588673854}
   blueMask: {fileID: 7238643505924293577}
-  delayAtStart: 5
+  delayAtStart: 3
   minimumCooldownAfterAction: 0.5
   maximumCooldownAfterAction: 2
   redPillarHealth: {fileID: 0}

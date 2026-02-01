@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 148de3aa9b5e44b69eb95d9e204925ad, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &313537516
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,11 +485,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7703252a832d8491a8d3cf12bcaf2bda, type: 3}
---- !u!137 &674474019 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2217165116575083709, guid: a580f59a40fa28343af9240e3ea12848, type: 3}
-  m_PrefabInstance: {fileID: 9218751015240579255}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &881411973
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,8 +547,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4303160a3a868874e90331bf2fbd30ec, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1035541188
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,8 +649,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 0
     m_Right: 0
@@ -680,8 +675,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf981eb0da7704798804d10db823eaa4, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   player: {fileID: 1798171538}
   heartPrefab: {fileID: 2704297183376574355, guid: e46c3dbd5fb7d4bb98e3df77dde54e7d, type: 3}
   heartContainer: {fileID: 1158248423}
@@ -747,8 +742,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 148de3aa9b5e44b69eb95d9e204925ad, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1643512725
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,8 +772,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
@@ -808,8 +803,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
@@ -842,8 +837,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32b3de1f1aa8e854aa21d60dd492bda7, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2015685322
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,8 +893,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 148de3aa9b5e44b69eb95d9e204925ad, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2137654256
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,8 +924,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
   m_BlockingObjects: 0
   m_BlockingMask:
@@ -946,8 +941,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
@@ -1012,7 +1007,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 590943431185034778, guid: 26a076749447bdc46b5fb6b7bc204ce4, type: 3}
       propertyPath: Target.TrackingTarget
-      value:
+      value: 
       objectReference: {fileID: 1798171536}
     - target: {fileID: 2484627278735247037, guid: 26a076749447bdc46b5fb6b7bc204ce4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1077,19 +1072,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5807457666719408023, guid: 848c461fc0768364489f29cec1f0aa4d, type: 3}
       propertyPath: player
-      value:
+      value: 
       objectReference: {fileID: 1798171536}
     - target: {fileID: 5807457666719408023, guid: 848c461fc0768364489f29cec1f0aa4d, type: 3}
       propertyPath: redPillarHealth
-      value:
+      value: 
       objectReference: {fileID: 179438098}
     - target: {fileID: 5807457666719408023, guid: 848c461fc0768364489f29cec1f0aa4d, type: 3}
       propertyPath: bluePillarHealth
-      value:
+      value: 
       objectReference: {fileID: 2124036789}
     - target: {fileID: 5807457666719408023, guid: 848c461fc0768364489f29cec1f0aa4d, type: 3}
       propertyPath: blackPillarHealth
-      value:
+      value: 
       objectReference: {fileID: 1510836678}
     - target: {fileID: 6577719372368238127, guid: 848c461fc0768364489f29cec1f0aa4d, type: 3}
       propertyPath: m_TagString
@@ -1166,7 +1161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3540492371316050475, guid: a580f59a40fa28343af9240e3ea12848, type: 3}
       propertyPath: controller
-      value:
+      value: 
       objectReference: {fileID: 1033479739}
     - target: {fileID: 4460620075994122604, guid: a580f59a40fa28343af9240e3ea12848, type: 3}
       propertyPath: m_Name
